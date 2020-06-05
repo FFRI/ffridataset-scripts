@@ -5,6 +5,7 @@ rules.zip
 rules/
 tlsh-master.zip
 tlsh-master/
+tlsh/
 trid
 triddefs.trd
 triddefs.zip
@@ -12,3 +13,4 @@ trid_linux_64/
 trid_linux_64.zip
 yara
 e2e/
+.venv

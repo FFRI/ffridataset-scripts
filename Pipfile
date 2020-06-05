@@ -4,17 +4,22 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
-black = "==19.3b0"
+black = "*"
+pip-licenses = "*"
 
 [packages]
 ssdeep = "*"
 pyimpfuzzy = "*"
-lief = "*"
 pefile = "*"
 pandas = "*"
 yara-python = "*"
 logzero = "*"
 numpy = "*"
+pypeid = {git = "https://github.com/FFRI/pypeid.git",ref = "0.1.0"}
+pehash = {editable = true,git = "https://github.com/knowmalware/pehash.git",ref = "v0.9.1"}
 
 [requires]
 python_version = "3.6"
+
+[pipenv]
+allow_prereleases = true

@@ -1,0 +1,2413 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "description": "FFRI Dataset 2020 JSON Schema",
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+        "id": {
+            "type": "string",
+            "pattern": "^[A-Fa-f0-9]{64}$"
+        },
+        "label": {
+            "type": "integer"
+        },
+        "date": {
+            "type": [
+                "string",
+                "null"
+            ],
+            "pattern": "^2019/[0-9]{2}/[0-9]{2}$"
+        },
+        "file_size": {
+            "type": "integer"
+        },
+        "trid": {
+            "type": "object",
+            "minProperties": 1
+        },
+        "strings": {
+            "type": "array",
+            "items": {
+                "type": "string",
+                "minLength": 4
+            }
+        },
+        "hashes": {
+            "type": "object",
+            "description": "cryptographic hashes, peHashes, and fuzzy hashes",
+            "required": [
+                "md5",
+                "sha1",
+                "sha256",
+                "ssdeep",
+                "imphash",
+                "impfuzzy",
+                "tlsh",
+                "totalhash",
+                "anymaster",
+                "anymaster_v1_0_1",
+                "endgame",
+                "crits",
+                "pehashng"
+            ],
+            "additionalProperties": false,
+            "properties": {
+                "md5": {
+                    "type": "string",
+                    "pattern": "^[A-Fa-f0-9]{32}$"
+                },
+                "sha1": {
+                    "type": "string",
+                    "pattern": "^[A-Fa-f0-9]{40}$"
+                },
+                "sha256": {
+                    "type": "string",
+                    "pattern": "^[A-Fa-f0-9]{64}$"
+                },
+                "ssdeep": {
+                    "type": "string",
+                    "pattern": "^[0-9]+:[A-Za-z0-9+/]*:[A-Za-z0-9+/]*$"
+                },
+                "imphash": {
+                    "type": "string",
+                    "oneOf": [
+                        {
+                            "pattern": "^[A-Fa-f0-9]{32}$"
+                        },
+                        {
+                            "pattern": "^$"
+                        }
+                    ]
+                },
+                "impfuzzy": {
+                    "type": "string",
+                    "pattern": "^[0-9]+:[A-Za-z0-9+/]*:[A-Za-z0-9+/]*$"
+                },
+                "tlsh": {
+                    "type": "string",
+                    "oneOf": [
+                        {
+                            "pattern": "^T[0-9][A-Fa-f0-9]{70}$"
+                        },
+                        {
+                            "pattern": "^[A-Fa-f0-9]{70}$"
+                        },
+                        {
+                            "pattern": "^$"
+                        }
+                    ]
+                },
+                "totalhash": {
+                    "type": [
+                        "string",
+                        "null"
+                    ],
+                    "pattern": "^[A-Fa-f0-9]{40}$"
+                },
+                "anymaster": {
+                    "type": "string",
+                    "pattern": "^[A-Fa-f0-9]{40}$"
+                },
+                "anymaster_v1_0_1": {
+                    "type": "string",
+                    "pattern": "^[A-Fa-f0-9]{40}$"
+                },
+                "endgame": {
+                    "type": [
+                        "string",
+                        "null"
+                    ],
+                    "pattern": "^[A-Fa-f0-9]{32}$"
+                },
+                "crits": {
+                    "type": [
+                        "string",
+                        "null"
+                    ],
+                    "pattern": "^[A-Fa-f0-9]{40}$"
+                },
+                "pehashng": {
+                    "type": "string",
+                    "pattern": "^[A-Fa-f0-9]{64}$"
+                }
+            }
+        },
+        "peid": {
+            "type": "object",
+            "description": "PEiD",
+            "required": [
+                "PE",
+                "DLL",
+                "Packed",
+                "Anti-Debug",
+                "GUI Program",
+                "Console Program",
+                "contains base64",
+                "AntiDebug",
+                "PEiD",
+                "mutex"
+            ],
+            "additionalProperties": false,
+            "properties": {
+                "PE": {
+                    "type": "string",
+                    "enum": [
+                        "32 bit",
+                        "64 bit"
+                    ]
+                },
+                "DLL": {
+                    "type": "string",
+                    "enum": [
+                        "yes",
+                        "no"
+                    ]
+                },
+                "Packed": {
+                    "type": "string",
+                    "enum": [
+                        "yes",
+                        "no"
+                    ]
+                },
+                "Anti-Debug": {
+                    "type": "string",
+                    "enum": [
+                        "yes",
+                        "no",
+                        "no (yes)"
+                    ]
+                },
+                "GUI Program": {
+                    "type": "string",
+                    "enum": [
+                        "yes",
+                        "no",
+                        "no (yes)"
+                    ]
+                },
+                "Console Program": {
+                    "type": "string",
+                    "enum": [
+                        "yes",
+                        "no",
+                        "no (yes)"
+                    ]
+                },
+                "contains base64": {
+                    "type": "string",
+                    "enum": [
+                        "yes",
+                        "no"
+                    ]
+                },
+                "AntiDebug": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "PEiD": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "mutex": {
+                    "type": "string",
+                    "enum": [
+                        "yes",
+                        "no"
+                    ]
+                }
+            }
+        },
+        "lief": {
+            "type": "object",
+            "description": "LIEF PE json schema",
+            "required": [
+                "name",
+                "entrypoint",
+                "virtual_size",
+                "dos_header",
+                "header",
+                "optional_header",
+                "data_directories",
+                "sections"
+            ],
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "name of the binary"
+                },
+                "entrypoint": {
+                    "type": "integer",
+                    "description": "entry point of the binary"
+                },
+                "virtual_size": {
+                    "type": "integer",
+                    "description": "virtual size of the binary"
+                },
+                "rich_header": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "key": {
+                            "type": "integer",
+                            "description": "key used to encode the header (xor operation)"
+                        },
+                        "entries": {
+                            "type": "array",
+                            "uniqueItems": false,
+                            "minItems": 1,
+                            "items": {
+                                "required": [
+                                    "build_id",
+                                    "count",
+                                    "id"
+                                ],
+                                "additionalProperties": false,
+                                "properties": {
+                                    "build_id": {
+                                        "type": "integer",
+                                        "description": "builder number of the tool (if any)"
+                                    },
+                                    "count": {
+                                        "type": "integer",
+                                        "description": "occurrence count"
+                                    },
+                                    "id": {
+                                        "type": "integer",
+                                        "description": "entry type"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "required": [
+                        "entries",
+                        "key"
+                    ]
+                },
+                "dos_header": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "magic": {
+                            "type": "integer"
+                        },
+                        "used_bytes_in_the_last_page": {
+                            "type": "integer"
+                        },
+                        "file_size_in_pages": {
+                            "type": "integer"
+                        },
+                        "numberof_relocation": {
+                            "type": "integer"
+                        },
+                        "header_size_in_paragraphs": {
+                            "type": "integer"
+                        },
+                        "maximum_extra_paragraphs": {
+                            "type": "integer"
+                        },
+                        "minimum_extra_paragraphs": {
+                            "type": "integer"
+                        },
+                        "initial_relative_ss": {
+                            "type": "integer"
+                        },
+                        "initial_sp": {
+                            "type": "integer"
+                        },
+                        "checksum": {
+                            "type": "integer"
+                        },
+                        "initial_ip": {
+                            "type": "integer"
+                        },
+                        "initial_relative_cs": {
+                            "type": "integer"
+                        },
+                        "addressof_relocation_table": {
+                            "type": "integer"
+                        },
+                        "overlay_number": {
+                            "type": "integer"
+                        },
+                        "reserved": {
+                            "type": "array",
+                            "items": [
+                                {
+                                    "type": "integer"
+                                },
+                                {
+                                    "type": "integer"
+                                },
+                                {
+                                    "type": "integer"
+                                },
+                                {
+                                    "type": "integer"
+                                }
+                            ]
+                        },
+                        "oem_id": {
+                            "type": "integer"
+                        },
+                        "oem_info": {
+                            "type": "integer"
+                        },
+                        "reserved2": {
+                            "type": "array",
+                            "items": [
+                                {
+                                    "type": "integer"
+                                },
+                                {
+                                    "type": "integer"
+                                },
+                                {
+                                    "type": "integer"
+                                },
+                                {
+                                    "type": "integer"
+                                },
+                                {
+                                    "type": "integer"
+                                },
+                                {
+                                    "type": "integer"
+                                },
+                                {
+                                    "type": "integer"
+                                },
+                                {
+                                    "type": "integer"
+                                },
+                                {
+                                    "type": "integer"
+                                },
+                                {
+                                    "type": "integer"
+                                }
+                            ]
+                        },
+                        "addressof_new_exeheader": {
+                            "type": "integer"
+                        }
+                    },
+                    "required": [
+                        "addressof_new_exeheader",
+                        "addressof_relocation_table",
+                        "checksum",
+                        "file_size_in_pages",
+                        "header_size_in_paragraphs",
+                        "initial_ip",
+                        "initial_relative_cs",
+                        "initial_relative_ss",
+                        "initial_sp",
+                        "magic",
+                        "maximum_extra_paragraphs",
+                        "minimum_extra_paragraphs",
+                        "numberof_relocation",
+                        "oem_id",
+                        "oem_info",
+                        "overlay_number",
+                        "reserved",
+                        "reserved2",
+                        "used_bytes_in_the_last_page"
+                    ]
+                },
+                "header": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "signature": {
+                            "type": "array",
+                            "items": [
+                                {
+                                    "type": "integer"
+                                },
+                                {
+                                    "type": "integer"
+                                },
+                                {
+                                    "type": "integer"
+                                },
+                                {
+                                    "type": "integer"
+                                }
+                            ]
+                        },
+                        "machine": {
+                            "type": "string",
+                            "enum": [
+                                "INVALID",
+                                "UNKNOWN",
+                                "AM33",
+                                "AMD64",
+                                "ARM",
+                                "ARMNT",
+                                "ARM64",
+                                "EBC",
+                                "I386",
+                                "IA64",
+                                "M32R",
+                                "MIPS16",
+                                "MIPSFPU",
+                                "MIPSFPU16",
+                                "POWERPC",
+                                "POWERPCFP",
+                                "R4000",
+                                "RISCV32",
+                                "RISCV64",
+                                "RISCV128",
+                                "SH3",
+                                "SH3DSP",
+                                "SH4",
+                                "SH5",
+                                "THUMB",
+                                "WCEMIPSV2",
+                                "Out of range"
+                            ]
+                        },
+                        "numberof_sections": {
+                            "type": "integer"
+                        },
+                        "time_date_stamp": {
+                            "type": "integer"
+                        },
+                        "numberof_symbols": {
+                            "type": "integer"
+                        },
+                        "pointerto_symbol_table": {
+                            "type": "integer"
+                        },
+                        "sizeof_optional_header": {
+                            "type": "integer"
+                        },
+                        "characteristics": {
+                            "type": "integer"
+                        }
+                    },
+                    "required": [
+                        "signature",
+                        "machine",
+                        "numberof_sections",
+                        "time_date_stamp",
+                        "pointerto_symbol_table",
+                        "numberof_symbols",
+                        "sizeof_optional_header",
+                        "characteristics"
+                    ]
+                },
+                "optional_header": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "magic": {
+                            "type": "string",
+                            "enum": [
+                                "PE32",
+                                "PE32_PLUS"
+                            ]
+                        },
+                        "major_linker_version": {
+                            "type": "integer"
+                        },
+                        "minor_linker_version": {
+                            "type": "integer"
+                        },
+                        "sizeof_code": {
+                            "type": "integer"
+                        },
+                        "sizeof_initialized_data": {
+                            "type": "integer"
+                        },
+                        "sizeof_uninitialized_data": {
+                            "type": "integer"
+                        },
+                        "addressof_entrypoint": {
+                            "type": "integer"
+                        },
+                        "baseof_code": {
+                            "type": "integer"
+                        },
+                        "baseof_data": {
+                            "type": "integer"
+                        },
+                        "imagebase": {
+                            "type": "integer"
+                        },
+                        "section_alignment": {
+                            "type": "integer"
+                        },
+                        "file_alignment": {
+                            "type": "integer"
+                        },
+                        "major_operating_system_version": {
+                            "type": "integer"
+                        },
+                        "minor_operating_system_version": {
+                            "type": "integer"
+                        },
+                        "major_image_version": {
+                            "type": "integer"
+                        },
+                        "minor_image_version": {
+                            "type": "integer"
+                        },
+                        "major_subsystem_version": {
+                            "type": "integer"
+                        },
+                        "minor_subsystem_version": {
+                            "type": "integer"
+                        },
+                        "win32_version_value": {
+                            "type": "integer"
+                        },
+                        "sizeof_image": {
+                            "type": "integer"
+                        },
+                        "sizeof_headers": {
+                            "type": "integer"
+                        },
+                        "checksum": {
+                            "type": "integer"
+                        },
+                        "subsystem": {
+                            "type": "string",
+                            "enum": [
+                                "UNKNOWN",
+                                "NATIVE",
+                                "WINDOWS_GUI",
+                                "WINDOWS_CUI",
+                                "OS2_CUI",
+                                "POSIX_CUI",
+                                "NATIVE_WINDOWS",
+                                "WINDOWS_CE_GUI",
+                                "EFI_APPLICATION",
+                                "EFI_BOOT_SERVICE_DRIVER",
+                                "EFI_RUNTIME_DRIVER",
+                                "EFI_ROM",
+                                "XBOX",
+                                "WINDOWS_BOOT_APPLICATION",
+                                "Out of range"
+                            ]
+                        },
+                        "dll_characteristics": {
+                            "type": "integer"
+                        },
+                        "sizeof_stack_reserve": {
+                            "type": "integer"
+                        },
+                        "sizeof_stack_commit": {
+                            "type": "integer"
+                        },
+                        "sizeof_heap_reserve": {
+                            "type": "integer"
+                        },
+                        "sizeof_heap_commit": {
+                            "type": "integer"
+                        },
+                        "loader_flags": {
+                            "type": "integer"
+                        },
+                        "numberof_rva_and_size": {
+                            "type": "integer"
+                        }
+                    },
+                    "required": [
+                        "magic",
+                        "major_linker_version",
+                        "minor_linker_version",
+                        "sizeof_code",
+                        "sizeof_initialized_data",
+                        "sizeof_uninitialized_data",
+                        "addressof_entrypoint",
+                        "baseof_code",
+                        "imagebase",
+                        "section_alignment",
+                        "file_alignment",
+                        "major_operating_system_version",
+                        "minor_operating_system_version",
+                        "major_image_version",
+                        "minor_image_version",
+                        "major_subsystem_version",
+                        "minor_subsystem_version",
+                        "win32_version_value",
+                        "sizeof_image",
+                        "sizeof_headers",
+                        "checksum",
+                        "subsystem",
+                        "dll_characteristics",
+                        "sizeof_stack_reserve",
+                        "sizeof_stack_commit",
+                        "sizeof_heap_reserve",
+                        "sizeof_heap_commit",
+                        "loader_flags",
+                        "numberof_rva_and_size"
+                    ]
+                },
+                "data_directories": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "minItems": 1,
+                    "items": {
+                        "required": [
+                            "RVA",
+                            "size",
+                            "type"
+                        ],
+                        "additionalProperties": false,
+                        "properties": {
+                            "RVA": {
+                                "type": "integer"
+                            },
+                            "size": {
+                                "type": "integer"
+                            },
+                            "type": {
+                                "type": "string",
+                                "enum": [
+                                    "EXPORT_TABLE",
+                                    "IMPORT_TABLE",
+                                    "RESOURCE_TABLE",
+                                    "EXCEPTION_TABLE",
+                                    "CERTIFICATE_TABLE",
+                                    "BASE_RELOCATION_TABLE",
+                                    "DEBUG",
+                                    "ARCHITECTURE",
+                                    "GLOBAL_PTR",
+                                    "TLS_TABLE",
+                                    "LOAD_CONFIG_TABLE",
+                                    "BOUND_IMPORT",
+                                    "IAT",
+                                    "DELAY_IMPORT_DESCRIPTOR",
+                                    "CLR_RUNTIME_HEADER"
+                                ]
+                            },
+                            "section": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "sections": {
+                    "type": "array",
+                    "uniqueItems": false,
+                    "minItems": 0,
+                    "items": {
+                        "required": [
+                            "name",
+                            "pointerto_relocation",
+                            "pointerto_line_numbers",
+                            "numberof_relocations",
+                            "numberof_line_numbers",
+                            "characteristics",
+                            "types",
+                            "entropy"
+                        ],
+                        "additionalProperties": false,
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            },
+                            "pointerto_relocation": {
+                                "type": "integer"
+                            },
+                            "pointerto_line_numbers": {
+                                "type": "integer"
+                            },
+                            "numberof_relocations": {
+                                "type": "integer"
+                            },
+                            "numberof_line_numbers": {
+                                "type": "integer"
+                            },
+                            "characteristics": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string",
+                                    "enum": [
+                                        "TYPE_NO_PAD",
+                                        "CNT_CODE",
+                                        "CNT_INITIALIZED_DATA",
+                                        "CNT_UNINITIALIZED_DATA",
+                                        "LNK_OTHER",
+                                        "LNK_INFO",
+                                        "LNK_REMOVE",
+                                        "LNK_COMDAT",
+                                        "GPREL",
+                                        "MEM_PURGEABLE",
+                                        "MEM_16BIT",
+                                        "MEM_LOCKED",
+                                        "MEM_PRELOAD",
+                                        "ALIGN_1BYTES",
+                                        "ALIGN_2BYTES",
+                                        "ALIGN_4BYTES",
+                                        "ALIGN_8BYTES",
+                                        "ALIGN_16BYTES",
+                                        "ALIGN_32BYTES",
+                                        "ALIGN_64BYTES",
+                                        "ALIGN_128BYTES",
+                                        "ALIGN_256BYTES",
+                                        "ALIGN_512BYTES",
+                                        "ALIGN_1024BYTES",
+                                        "ALIGN_2048BYTES",
+                                        "ALIGN_4096BYTES",
+                                        "ALIGN_8192BYTES",
+                                        "LNK_NRELOC_OVFL",
+                                        "MEM_DISCARDABLE",
+                                        "MEM_NOT_CACHED",
+                                        "MEM_NOT_PAGED",
+                                        "MEM_SHARED",
+                                        "MEM_EXECUTE",
+                                        "MEM_READ",
+                                        "MEM_WRITE"
+                                    ]
+                                }
+                            },
+                            "types": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string",
+                                    "enum": [
+                                        "TEXT",
+                                        "TLS_",
+                                        "IDATA",
+                                        "DATA",
+                                        "BSS",
+                                        "RESOURCE",
+                                        "RELOCATION",
+                                        "EXPORT",
+                                        "DEBUG",
+                                        "UNKNOWN",
+                                        "Out of range"
+                                    ]
+                                }
+                            },
+                            "entropy": {
+                                "type": "number",
+                                "minimum": 0.0,
+                                "maximum": 8.0
+                            }
+                        }
+                    }
+                },
+                "relocations": {
+                    "type": "array",
+                    "uniqueItems": false,
+                    "minItems": 0,
+                    "items": {
+                        "required": [
+                            "virtual_address",
+                            "block_size",
+                            "entries"
+                        ],
+                        "additionalProperties": false,
+                        "properties": {
+                            "virtual_address": {
+                                "type": "integer"
+                            },
+                            "block_size": {
+                                "type": "integer"
+                            },
+                            "entries": {
+                                "type": "array",
+                                "uniqueItems": false,
+                                "minItems": 0,
+                                "items": {
+                                    "required": [
+                                        "data",
+                                        "position",
+                                        "type"
+                                    ],
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "data": {
+                                            "type": "integer"
+                                        },
+                                        "position": {
+                                            "type": "integer"
+                                        },
+                                        "type": {
+                                            "type": "string",
+                                            "enum": [
+                                                "ABSOLUTE",
+                                                "HIGH",
+                                                "LOW",
+                                                "HIGHLOW",
+                                                "HIGHADJ",
+                                                "MIPS_JMPADDR | ARM_MOV32A | ARM_MOV32 | RISCV_HI20",
+                                                "SECTION",
+                                                "REL | ARM_MOV32T | THUMB_MOV32 | RISCV_LOW12I",
+                                                "RISCV_LOW12S",
+                                                "MIPS_JMPADDR16 | IA64_DIR64",
+                                                "DIR64",
+                                                "HIGH3ADJ",
+                                                "Out of range"
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tls": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "description": "",
+                    "properties": {
+                        "callbacks": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        },
+                        "addressof_raw_data": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        },
+                        "addressof_index": {
+                            "type": "integer"
+                        },
+                        "addressof_callbacks": {
+                            "type": "integer"
+                        },
+                        "sizeof_zero_fill": {
+                            "type": "integer"
+                        },
+                        "characteristics": {
+                            "type": "integer",
+                            "description": "The four bits [23:20] describe alignment info. Possible values are those defined as IMAGE_SCN_ALIGN_*, which are also used to describe alignment of section in object files. The other 28 bits are reserved for future use."
+                        },
+                        "data_directory": {
+                            "type": "string",
+                            "enum": [
+                                "EXPORT_TABLE",
+                                "IMPORT_TABLE",
+                                "RESOURCE_TABLE",
+                                "EXCEPTION_TABLE",
+                                "CERTIFICATE_TABLE",
+                                "BASE_RELOCATION_TABLE",
+                                "DEBUG",
+                                "ARCHITECTURE",
+                                "GLOBAL_PTR",
+                                "TLS_TABLE",
+                                "LOAD_CONFIG_TABLE",
+                                "BOUND_IMPORT",
+                                "IAT",
+                                "DELAY_IMPORT_DESCRIPTOR",
+                                "CLR_RUNTIME_HEADER"
+                            ]
+                        },
+                        "section": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "callbacks",
+                        "addressof_raw_data",
+                        "addressof_callbacks",
+                        "addressof_index",
+                        "sizeof_zero_fill",
+                        "characteristics"
+                    ]
+                },
+                "export": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "export_flags": {
+                            "type": "integer",
+                            "description": ""
+                        },
+                        "timestamp": {
+                            "type": "integer"
+                        },
+                        "major_version": {
+                            "type": "integer"
+                        },
+                        "minor_version": {
+                            "type": "integer"
+                        },
+                        "ordinal_base": {
+                            "type": "integer"
+                        },
+                        "name": {
+                            "type": "string"
+                        },
+                        "entries": {
+                            "type": "array",
+                            "uniqueItems": true,
+                            "minItems": 0,
+                            "items": {
+                                "required": [
+                                    "name",
+                                    "ordinal",
+                                    "address",
+                                    "is_extern"
+                                ],
+                                "additionalProperties": false,
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "ordinal": {
+                                        "type": "integer"
+                                    },
+                                    "address": {
+                                        "type": "integer"
+                                    },
+                                    "is_extern": {
+                                        "type": "boolean"
+                                    },
+                                    "forward_information": {
+                                        "type": "object",
+                                        "additionalProperties": false,
+                                        "properties": {
+                                            "library": {
+                                                "type": "string"
+                                            },
+                                            "function": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "required": [
+                                            "library",
+                                            "function"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "required": [
+                        "export_flags",
+                        "timestamp",
+                        "major_version",
+                        "minor_version",
+                        "ordinal_base",
+                        "name",
+                        "entries"
+                    ]
+                },
+                "debug": {
+                    "type": "array",
+                    "uniqueItems": false,
+                    "minItems": 0,
+                    "items": {
+                        "additionalProperties": false,
+                        "properties": {
+                            "characteristics": {
+                                "type": "integer"
+                            },
+                            "timestamp": {
+                                "type": "integer"
+                            },
+                            "major_version": {
+                                "type": "integer"
+                            },
+                            "minor_version": {
+                                "type": "integer"
+                            },
+                            "type": {
+                                "type": "string",
+                                "enum": [
+                                    "UNKNOWN",
+                                    "COFF",
+                                    "CODEVIEW",
+                                    "FPO",
+                                    "MISC",
+                                    "EXCEPTION",
+                                    "FIXUP",
+                                    "OMAP_TO_SRC",
+                                    "OMAP_FROM_SRC",
+                                    "BORLAND",
+                                    "RESERVED",
+                                    "CLSID",
+                                    "VC_FEATURE",
+                                    "POGO",
+                                    "ILTCG",
+                                    "MPX",
+                                    "REPRO",
+                                    "EX_DLLCHARACTERISTICS",
+                                    "Out of range"
+                                ]
+                            },
+                            "sizeof_data": {
+                                "type": "integer"
+                            },
+                            "addressof_rawdata": {
+                                "type": "integer"
+                            },
+                            "pointerto_rawdata": {
+                                "type": "integer"
+                            },
+                            "code_view": {
+                                "type": "object",
+                                "additionalProperties": false,
+                                "properties": {
+                                    "age": {
+                                        "type": "integer"
+                                    },
+                                    "cv_signature": {
+                                        "type": "string",
+                                        "enum": [
+                                            "UNKNOWN",
+                                            "PDB_70",
+                                            "PDB_20",
+                                            "CV_50",
+                                            "CV_41"
+                                        ]
+                                    },
+                                    "filename": {
+                                        "type": "string"
+                                    },
+                                    "signature": {
+                                        "type": "array",
+                                        "items": [
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "integer"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "cv_signature"
+                                ]
+                            },
+                            "pogo": {
+                                "type": "object",
+                                "additionalProperties": false,
+                                "properties": {
+                                    "signature": {
+                                        "type": "string",
+                                        "enum": [
+                                            "UNKNOWN",
+                                            "LCTG",
+                                            "PGI"
+                                        ]
+                                    },
+                                    "entries": {
+                                        "type": "array",
+                                        "uniqueItems": false,
+                                        "minItems": 0,
+                                        "items": {
+                                            "required": [
+                                                "name",
+                                                "start_rva",
+                                                "size"
+                                            ],
+                                            "additionalProperties": false,
+                                            "properties": {
+                                                "name": {
+                                                    "type": "string"
+                                                },
+                                                "start_rva": {
+                                                    "type": "integer"
+                                                },
+                                                "size": {
+                                                    "type": "integer"
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "required": [
+                                    "signature",
+                                    "entries"
+                                ]
+                            }
+                        },
+                        "required": [
+                            "characteristics",
+                            "timestamp",
+                            "major_version",
+                            "minor_version",
+                            "type",
+                            "sizeof_data",
+                            "addressof_rawdata",
+                            "pointerto_rawdata"
+                        ]
+                    }
+                },
+                "imports": {
+                    "type": "array",
+                    "uniqueItems": false,
+                    "minItems": 0,
+                    "items": {
+                        "required": [
+                            "forwarder_chain",
+                            "timedatestamp",
+                            "import_address_table_rva",
+                            "import_lookup_table_rva",
+                            "name",
+                            "entries"
+                        ],
+                        "additionalProperties": false,
+                        "properties": {
+                            "forwarder_chain": {
+                                "type": "integer"
+                            },
+                            "timedatestamp": {
+                                "type": "integer"
+                            },
+                            "import_address_table_rva": {
+                                "type": "integer"
+                            },
+                            "import_lookup_table_rva": {
+                                "type": "integer"
+                            },
+                            "name": {
+                                "type": "string"
+                            },
+                            "entries": {
+                                "type": "array",
+                                "uniqueItems": true,
+                                "minItems": 0,
+                                "items": {
+                                    "required": [
+                                        "iat_address",
+                                        "data",
+                                        "hint"
+                                    ],
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "ordinal": {
+                                            "type": "integer"
+                                        },
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "iat_address": {
+                                            "type": "integer"
+                                        },
+                                        "data": {
+                                            "type": "integer"
+                                        },
+                                        "hint": {
+                                            "type": "integer"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "resources_tree": {
+                    "$ref": "#/definitions/resource_directory"
+                },
+                "resources_manager": {
+                    "type": [
+                        "object",
+                        "null"
+                    ],
+                    "additionalProperties": false,
+                    "description": "resources manager is a kind of wrapper over the resource tree (see https://lief.quarkslab.com/doc/latest/tutorials/07_pe_resource.html#resource-manager)",
+                    "properties": {
+                        "manifest": {
+                            "type": "string"
+                        },
+                        "version": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                                "type": {
+                                    "type": "integer"
+                                },
+                                "key": {
+                                    "type": "string",
+                                    "description": "Signature of the structure: Must be the unicode string VS_VERSION_INFO"
+                                },
+                                "fixed_file_info": {
+                                    "type": "object",
+                                    "additionalProperties": false,
+                                    "description": "Contains version information for a file. This information is language and code page independent. (see https://docs.microsoft.com/en-us/windows/win32/api/verrsrc/ns-verrsrc-vs_fixedfileinfo)",
+                                    "properties": {
+                                        "signature": {
+                                            "type": "integer"
+                                        },
+                                        "struct_version": {
+                                            "type": "integer"
+                                        },
+                                        "file_version_MS": {
+                                            "type": "integer"
+                                        },
+                                        "file_version_LS": {
+                                            "type": "integer"
+                                        },
+                                        "product_version_MS": {
+                                            "type": "integer"
+                                        },
+                                        "product_version_LS": {
+                                            "type": "integer"
+                                        },
+                                        "file_flags_mask": {
+                                            "type": "integer"
+                                        },
+                                        "file_flags": {
+                                            "type": "integer"
+                                        },
+                                        "file_os": {
+                                            "type": "string",
+                                            "enum": [
+                                                "UNKNOWN",
+                                                "DOS",
+                                                "NT",
+                                                "WINDOWS16",
+                                                "WINDOWS32",
+                                                "OS216",
+                                                "OS232",
+                                                "PM16",
+                                                "PM32",
+                                                "DOS_WINDOWS16",
+                                                "DOS_WINDOWS32",
+                                                "NT_WINDOWS32",
+                                                "OS216_PM16",
+                                                "OS232_PM32",
+                                                "Out of range"
+                                            ]
+                                        },
+                                        "file_type": {
+                                            "type": "string",
+                                            "enum": [
+                                                "APP",
+                                                "DLL",
+                                                "DRV",
+                                                "FONT",
+                                                "STATIC_LIB",
+                                                "VXD",
+                                                "UNKNOWN",
+                                                "Out of range"
+                                            ]
+                                        },
+                                        "file_subtype": {
+                                            "type": "string",
+                                            "enum": [
+                                                "DRV_COMM",
+                                                "DRV_DISPLAY",
+                                                "DRV_INSTALLABLE",
+                                                "DRV_KEYBOARD",
+                                                "DRV_LANGUAGE",
+                                                "DRV_MOUSE",
+                                                "DRV_NETWORK",
+                                                "DRV_PRINTER",
+                                                "DRV_SOUND",
+                                                "DRV_SYSTEM",
+                                                "DRV_VERSIONED_PRINTER",
+                                                "UNKNOWN",
+                                                "Out of range"
+                                            ]
+                                        },
+                                        "file_date_MS": {
+                                            "type": "integer"
+                                        },
+                                        "file_date_LS": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "required": [
+                                        "file_date_LS",
+                                        "file_date_MS",
+                                        "file_flags",
+                                        "file_flags_mask",
+                                        "file_os",
+                                        "file_subtype",
+                                        "file_type",
+                                        "file_version_LS",
+                                        "file_version_MS",
+                                        "product_version_LS",
+                                        "product_version_MS",
+                                        "signature",
+                                        "struct_version"
+                                    ]
+                                },
+                                "string_file_info": {
+                                    "type": "object",
+                                    "additionalProperties": false,
+                                    "description": "(see https://docs.microsoft.com/en-us/windows/win32/menurc/stringfileinfo?redirectedfrom=MSDN)",
+                                    "properties": {
+                                        "type": {
+                                            "type": "integer",
+                                            "description": "The type of data in the version resource. This member is 1 if the version resource contains text data and 0 if the version resource contains binary data."
+                                        },
+                                        "key": {
+                                            "type": "string"
+                                        },
+                                        "langcode_items": {
+                                            "type": "array",
+                                            "uniqueItems": false,
+                                            "minItems": 0,
+                                            "items": {
+                                                "required": [
+                                                    "key",
+                                                    "type"
+                                                ],
+                                                "additionalProperties": false,
+                                                "properties": {
+                                                    "type": {
+                                                        "type": "integer"
+                                                    },
+                                                    "key": {
+                                                        "type": "string"
+                                                    },
+                                                    "items": {
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "key",
+                                        "langcode_items",
+                                        "type"
+                                    ]
+                                },
+                                "var_file_info": {
+                                    "type": "object",
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "type": {
+                                            "type": "integer"
+                                        },
+                                        "key": {
+                                            "type": "string"
+                                        },
+                                        "translations": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "integer"
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "type",
+                                        "key",
+                                        "translations"
+                                    ]
+                                }
+                            },
+                            "required": [
+                                "type",
+                                "key"
+                            ]
+                        },
+                        "icons": {
+                            "type": "array",
+                            "uniqueItems": false,
+                            "items": {
+                                "required": [
+                                    "id",
+                                    "lang",
+                                    "sublang",
+                                    "width",
+                                    "height",
+                                    "color_count",
+                                    "reserved",
+                                    "planes",
+                                    "bit_count",
+                                    "pixels"
+                                ],
+                                "additionalProperties": false,
+                                "properties": {
+                                    "id": {
+                                        "type": "integer"
+                                    },
+                                    "lang": {
+                                        "type": "string",
+                                        "enum": [
+                                            "NEUTRAL",
+                                            "INVARIANT",
+                                            "AFRIKAANS",
+                                            "ALBANIAN",
+                                            "ARABIC",
+                                            "ARMENIAN",
+                                            "ASSAMESE",
+                                            "AZERI",
+                                            "BASQUE",
+                                            "BELARUSIAN",
+                                            "BANGLA",
+                                            "BULGARIAN",
+                                            "CATALAN",
+                                            "CHINESE",
+                                            "CROATIAN",
+                                            "CZECH",
+                                            "DANISH",
+                                            "DIVEHI",
+                                            "DUTCH",
+                                            "ENGLISH",
+                                            "ESTONIAN",
+                                            "FAEROESE",
+                                            "FARSI",
+                                            "FINNISH",
+                                            "FRENCH",
+                                            "GALICIAN",
+                                            "GEORGIAN",
+                                            "GERMAN",
+                                            "GREEK",
+                                            "GUJARATI",
+                                            "HEBREW",
+                                            "HINDI",
+                                            "HUNGARIAN",
+                                            "ICELANDIC",
+                                            "INDONESIAN",
+                                            "ITALIAN",
+                                            "JAPANESE",
+                                            "KANNADA",
+                                            "KASHMIRI",
+                                            "KAZAK",
+                                            "KONKANI",
+                                            "KOREAN",
+                                            "KYRGYZ",
+                                            "LATVIAN",
+                                            "LITHUANIAN",
+                                            "MACEDONIAN",
+                                            "MALAY",
+                                            "MALAYALAM",
+                                            "MANIPURI",
+                                            "MARATHI",
+                                            "MONGOLIAN",
+                                            "NEPALI",
+                                            "NORWEGIAN",
+                                            "ORIYA",
+                                            "POLISH",
+                                            "PORTUGUESE",
+                                            "PUNJABI",
+                                            "ROMANIAN",
+                                            "RUSSIAN",
+                                            "SANSKRIT",
+                                            "SINDHI",
+                                            "SLOVAK",
+                                            "SLOVENIAN",
+                                            "SPANISH",
+                                            "SWAHILI",
+                                            "SWEDISH",
+                                            "SYRIAC",
+                                            "TAMIL",
+                                            "TATAR",
+                                            "TELUGU",
+                                            "THAI",
+                                            "TURKISH",
+                                            "UKRAINIAN",
+                                            "URDU",
+                                            "UZBEK",
+                                            "VIETNAMESE",
+                                            "MALTESE",
+                                            "MAORI",
+                                            "RHAETO_ROMANCE",
+                                            "SAMI",
+                                            "SORBIAN",
+                                            "SUTU",
+                                            "TSONGA",
+                                            "TSWANA",
+                                            "VENDA",
+                                            "XHOSA",
+                                            "ZULU",
+                                            "ESPERANTO",
+                                            "WALON",
+                                            "CORNISH",
+                                            "WELSH",
+                                            "BRETON",
+                                            "INUKTITUT",
+                                            "IRISH",
+                                            "PULAR",
+                                            "QUECHUA",
+                                            "TAMAZIGHT",
+                                            "TIGRINYA",
+                                            "Out of range"
+                                        ]
+                                    },
+                                    "sublang": {
+                                        "type": "string",
+                                        "enum": [
+                                            "AFRIKAANS_SOUTH_AFRICA",
+                                            "ALBANIAN_ALBANIA",
+                                            "ALSATIAN_FRANCE",
+                                            "AMHARIC_ETHIOPIA",
+                                            "ARABIC_ALGERIA",
+                                            "ARABIC_BAHRAIN",
+                                            "ARABIC_EGYPT",
+                                            "ARABIC_IRAQ",
+                                            "ARABIC_JORDAN",
+                                            "ARABIC_KUWAIT",
+                                            "ARABIC_LEBANON",
+                                            "ARABIC_LIBYA",
+                                            "ARABIC_MOROCCO",
+                                            "ARABIC_OMAN",
+                                            "ARABIC_QATAR",
+                                            "ARABIC_SAUDI_ARABIA",
+                                            "ARABIC_SYRIA",
+                                            "ARABIC_TUNISIA",
+                                            "ARABIC_UAE",
+                                            "ARABIC_YEMEN",
+                                            "ARMENIAN_ARMENIA",
+                                            "ASSAMESE_INDIA",
+                                            "AZERI_CYRILLIC",
+                                            "AZERI_LATIN",
+                                            "BASHKIR_RUSSIA",
+                                            "BASQUE_BASQUE",
+                                            "BELARUSIAN_BELARUS",
+                                            "BANGLA_BANGLADESH",
+                                            "BANGLA_INDIA",
+                                            "BOSNIAN_BOSNIA_HERZEGOVINA_CYRILLIC",
+                                            "BOSNIAN_BOSNIA_HERZEGOVINA_LATIN",
+                                            "BRETON_FRANCE",
+                                            "BULGARIAN_BULGARIA",
+                                            "CATALAN_CATALAN",
+                                            "CHINESE_HONGKONG",
+                                            "CHINESE_MACAU",
+                                            "CHINESE_SIMPLIFIED",
+                                            "CHINESE_SINGAPORE",
+                                            "CHINESE_TRADITIONAL",
+                                            "CORSICAN_FRANCE",
+                                            "CROATIAN_BOSNIA_HERZEGOVINA_LATIN",
+                                            "CROATIAN_CROATIA",
+                                            "CUSTOM_DEFAULT",
+                                            "CUSTOM_UNSPECIFIED",
+                                            "CZECH_CZECH_REPUBLIC",
+                                            "DANISH_DENMARK",
+                                            "DARI_AFGHANISTAN",
+                                            "DEFAULT",
+                                            "DIVEHI_MALDIVES",
+                                            "DUTCH_BELGIAN",
+                                            "DUTCH",
+                                            "ENGLISH_AUS",
+                                            "ENGLISH_BELIZE",
+                                            "ENGLISH_CAN",
+                                            "ENGLISH_CARIBBEAN",
+                                            "ENGLISH_EIRE",
+                                            "ENGLISH_INDIA",
+                                            "ENGLISH_JAMAICA",
+                                            "ENGLISH_MALAYSIA",
+                                            "ENGLISH_NZ",
+                                            "ENGLISH_PHILIPPINES",
+                                            "ENGLISH_SINGAPORE",
+                                            "ENGLISH_SOUTH_AFRICA",
+                                            "ENGLISH_TRINIDAD",
+                                            "ENGLISH_UK",
+                                            "ENGLISH_US",
+                                            "ENGLISH_ZIMBABWE",
+                                            "ENGLISH_IRELAND",
+                                            "ESTONIAN_ESTONIA",
+                                            "FAEROESE_FAROE_ISLANDS",
+                                            "FILIPINO_PHILIPPINES",
+                                            "FINNISH_FINLAND",
+                                            "FRENCH_BELGIAN",
+                                            "FRENCH_CANADIAN",
+                                            "FRENCH_LUXEMBOURG",
+                                            "FRENCH_MONACO",
+                                            "FRENCH_SWISS",
+                                            "FRENCH",
+                                            "FRISIAN_NETHERLANDS",
+                                            "GALICIAN_GALICIAN",
+                                            "GEORGIAN_GEORGIA",
+                                            "GERMAN_AUSTRIAN",
+                                            "GERMAN_LIECHTENSTEIN",
+                                            "GERMAN_LUXEMBOURG",
+                                            "GERMAN_SWISS",
+                                            "GERMAN",
+                                            "GREEK_GREECE",
+                                            "GREENLANDIC_GREENLAND",
+                                            "GUJARATI_INDIA",
+                                            "HAUSA_NIGERIA_LATIN",
+                                            "HEBREW_ISRAEL",
+                                            "HINDI_INDIA",
+                                            "HUNGARIAN_HUNGARY",
+                                            "ICELANDIC_ICELAND",
+                                            "IGBO_NIGERIA",
+                                            "INDONESIAN_INDONESIA",
+                                            "INUKTITUT_CANADA_LATIN",
+                                            "INUKTITUT_CANADA",
+                                            "IRISH_IRELAND",
+                                            "ITALIAN_SWISS",
+                                            "ITALIAN",
+                                            "JAPANESE_JAPAN",
+                                            "KANNADA_INDIA",
+                                            "KASHMIRI_INDIA",
+                                            "KASHMIRI_SASIA",
+                                            "KAZAK_KAZAKHSTAN",
+                                            "KHMER_CAMBODIA",
+                                            "KICHE_GUATEMALA",
+                                            "KINYARWANDA_RWANDA",
+                                            "KONKANI_INDIA",
+                                            "KOREAN",
+                                            "KYRGYZ_KYRGYZSTAN",
+                                            "LAO_LAO",
+                                            "LATVIAN_LATVIA",
+                                            "LITHUANIAN_CLASSIC",
+                                            "LITHUANIAN",
+                                            "LOWER_SORBIAN_GERMANY",
+                                            "LUXEMBOURGISH_LUXEMBOURG",
+                                            "MACEDONIAN_MACEDONIA",
+                                            "MALAY_BRUNEI_DARUSSALAM",
+                                            "MALAY_MALAYSIA",
+                                            "MALAYALAM_INDIA",
+                                            "MALTESE_MALTA",
+                                            "MAORI_NEW_ZEALAND",
+                                            "MAPUDUNGUN_CHILE",
+                                            "MARATHI_INDIA",
+                                            "MOHAWK_MOHAWK",
+                                            "MONGOLIAN_CYRILLIC_MONGOLIA",
+                                            "MONGOLIAN_PRC",
+                                            "NEPALI_INDIA",
+                                            "NEPALI_NEPAL",
+                                            "NEUTRAL",
+                                            "NORWEGIAN_BOKMAL",
+                                            "NORWEGIAN_NYNORSK",
+                                            "OCCITAN_FRANCE",
+                                            "ORIYA_INDIA",
+                                            "PASHTO_AFGHANISTAN",
+                                            "PERSIAN_IRAN",
+                                            "POLISH_POLAND",
+                                            "PORTUGUESE_BRAZILIAN",
+                                            "PORTUGUESE",
+                                            "PUNJABI_INDIA",
+                                            "QUECHUA_BOLIVIA",
+                                            "QUECHUA_ECUADOR",
+                                            "QUECHUA_PERU",
+                                            "ROMANIAN_ROMANIA",
+                                            "ROMANSH_SWITZERLAND",
+                                            "RUSSIAN_RUSSIA",
+                                            "SAMI_INARI_FINLAND",
+                                            "SAMI_LULE_NORWAY",
+                                            "SAMI_LULE_SWEDEN",
+                                            "SAMI_NORTHERN_FINLAND",
+                                            "SAMI_NORTHERN_NORWAY",
+                                            "SAMI_NORTHERN_SWEDEN",
+                                            "SAMI_SKOLT_FINLAND",
+                                            "SAMI_SOUTHERN_NORWAY",
+                                            "SAMI_SOUTHERN_SWEDEN",
+                                            "SANSKRIT_INDIA",
+                                            "SERBIAN_BOSNIA_HERZEGOVINA_CYRILLIC",
+                                            "SERBIAN_BOSNIA_HERZEGOVINA_LATIN",
+                                            "SERBIAN_CROATIA",
+                                            "SERBIAN_CYRILLIC",
+                                            "SERBIAN_LATIN",
+                                            "SINDHI_AFGHANISTAN",
+                                            "SINDHI_INDIA",
+                                            "SINDHI_PAKISTAN",
+                                            "SINHALESE_SRI_LANKA",
+                                            "SLOVAK_SLOVAKIA",
+                                            "SLOVENIAN_SLOVENIA",
+                                            "SOTHO_NORTHERN_SOUTH_AFRICA",
+                                            "SPANISH_ARGENTINA",
+                                            "SPANISH_BOLIVIA",
+                                            "SPANISH_CHILE",
+                                            "SPANISH_COLOMBIA",
+                                            "SPANISH_COSTA_RICA",
+                                            "SPANISH_DOMINICAN_REPUBLIC",
+                                            "SPANISH_ECUADOR",
+                                            "SPANISH_EL_SALVADOR",
+                                            "SPANISH_GUATEMALA",
+                                            "SPANISH_HONDURAS",
+                                            "SPANISH_MEXICAN",
+                                            "SPANISH_MODERN",
+                                            "SPANISH_NICARAGUA",
+                                            "SPANISH_PANAMA",
+                                            "SPANISH_PARAGUAY",
+                                            "SPANISH_PERU",
+                                            "SPANISH_PUERTO_RICO",
+                                            "SPANISH_URUGUAY",
+                                            "SPANISH_US",
+                                            "SPANISH_VENEZUELA",
+                                            "SPANISH",
+                                            "SWAHILI_KENYA",
+                                            "SWEDISH_FINLAND",
+                                            "SWEDISH",
+                                            "SYRIAC_SYRIA",
+                                            "SYS_DEFAULT",
+                                            "TAJIK_TAJIKISTAN",
+                                            "TAMAZIGHT_ALGERIA_LATIN",
+                                            "TAMIL_INDIA",
+                                            "TATAR_RUSSIA",
+                                            "TELUGU_INDIA",
+                                            "THAI_THAILAND",
+                                            "TIBETAN_PRC",
+                                            "TIGRIGNA_ERITREA",
+                                            "TSWANA_SOUTH_AFRICA",
+                                            "TURKISH_TURKEY",
+                                            "TURKMEN_TURKMENISTAN",
+                                            "UI_CUSTOM_DEFAULT",
+                                            "UIGHUR_PRC",
+                                            "UKRAINIAN_UKRAINE",
+                                            "UPPER_SORBIAN_GERMANY",
+                                            "URDU_INDIA",
+                                            "URDU_PAKISTAN",
+                                            "UZBEK_CYRILLIC",
+                                            "UZBEK_LATIN",
+                                            "VIETNAMESE_VIETNAM",
+                                            "WELSH_UNITED_KINGDOM",
+                                            "WOLOF_SENEGAL",
+                                            "XHOSA_SOUTH_AFRICA",
+                                            "YAKUT_RUSSIA",
+                                            "YI_PRC",
+                                            "YORUBA_NIGERIA",
+                                            "ZULU_SOUTH_AFRICA",
+                                            "PUNJABI_PAKISTAN",
+                                            "TSWANA_BOTSWANA",
+                                            "TAMIL_SRI_LANKA",
+                                            "TIGRINYA_ETHIOPIA",
+                                            "TIGRINYA_ERITREA",
+                                            "VALENCIAN_VALENCIA"
+                                        ]
+                                    },
+                                    "width": {
+                                        "type": "integer"
+                                    },
+                                    "height": {
+                                        "type": "integer"
+                                    },
+                                    "color_count": {
+                                        "type": "integer"
+                                    },
+                                    "reserved": {
+                                        "type": "integer"
+                                    },
+                                    "planes": {
+                                        "type": "integer"
+                                    },
+                                    "bit_count": {
+                                        "type": "integer"
+                                    },
+                                    "pixels": {
+                                        "type": "integer"
+                                    }
+                                }
+                            }
+                        },
+                        "dialogs": {
+                            "type": "array",
+                            "uniqueItems": false,
+                            "items": {
+                                "additionalProperties": false,
+                                "properties": {
+                                    "x": {
+                                        "type": "integer"
+                                    },
+                                    "y": {
+                                        "type": "integer"
+                                    },
+                                    "cx": {
+                                        "type": "integer"
+                                    },
+                                    "cy": {
+                                        "type": "integer"
+                                    },
+                                    "style": {
+                                        "type": "integer"
+                                    },
+                                    "extended_style": {
+                                        "type": "integer"
+                                    },
+                                    "items": {
+                                        "type": "array",
+                                        "uniqueItems": false,
+                                        "items": {
+                                            "additionalProperties": false,
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer"
+                                                },
+                                                "x": {
+                                                    "type": "integer"
+                                                },
+                                                "y": {
+                                                    "type": "integer"
+                                                },
+                                                "cx": {
+                                                    "type": "integer"
+                                                },
+                                                "cy": {
+                                                    "type": "integer"
+                                                },
+                                                "style": {
+                                                    "type": "integer"
+                                                },
+                                                "extended_style": {
+                                                    "type": "integer"
+                                                },
+                                                "title": {
+                                                    "type": "string"
+                                                },
+                                                "help_id": {
+                                                    "type": "integer"
+                                                }
+                                            },
+                                            "required": [
+                                                "id",
+                                                "x",
+                                                "y",
+                                                "cx",
+                                                "cy",
+                                                "style",
+                                                "extended_style"
+                                            ]
+                                        }
+                                    },
+                                    "version": {
+                                        "type": "integer"
+                                    },
+                                    "signature": {
+                                        "type": "integer"
+                                    },
+                                    "help_id": {
+                                        "type": "integer"
+                                    },
+                                    "weight": {
+                                        "type": "integer"
+                                    },
+                                    "point_size": {
+                                        "type": "integer"
+                                    },
+                                    "is_italic": {
+                                        "type": "boolean"
+                                    },
+                                    "charset": {
+                                        "type": "integer"
+                                    },
+                                    "title": {
+                                        "type": "string"
+                                    },
+                                    "typeface": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "x",
+                                    "y",
+                                    "cx",
+                                    "cy",
+                                    "style",
+                                    "extended_style",
+                                    "items"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "signature": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "version": {
+                            "type": "integer"
+                        },
+                        "content_info": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                                "content_type": {
+                                    "type": "string"
+                                },
+                                "digest_algorithm": {
+                                    "type": "string"
+                                },
+                                "type": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "content_type",
+                                "digest_algorithm",
+                                "type"
+                            ]
+                        },
+                        "signer_info": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                                "version": {
+                                    "type": "integer"
+                                },
+                                "digest_algorithm": {
+                                    "type": "string",
+                                    "description": "Algorithm (OID) used to hash the file."
+                                },
+                                "signature_algorithm": {
+                                    "type": "string"
+                                },
+                                "authenticated_attributes": {
+                                    "type": "object",
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "content_type": {
+                                            "type": "string"
+                                        },
+                                        "program_name": {
+                                            "type": "string"
+                                        },
+                                        "url": {
+                                            "type": "string"
+                                        },
+                                        "message_digest": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "integer"
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "content_type",
+                                        "message_digest",
+                                        "program_name",
+                                        "url"
+                                    ]
+                                },
+                                "issuer": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "authenticated_attributes",
+                                "digest_algorithm",
+                                "issuer",
+                                "signature_algorithm",
+                                "version"
+                            ]
+                        },
+                        "certificates": {
+                            "type": "array",
+                            "uniqueItems": false,
+                            "minItems": 0,
+                            "items": {
+                                "required": [
+                                    "issuer",
+                                    "subject",
+                                    "version"
+                                ],
+                                "additionalProperties": false,
+                                "properties": {
+                                    "serial_number": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "version": {
+                                        "type": "integer"
+                                    },
+                                    "issuer": {
+                                        "type": "string"
+                                    },
+                                    "subject": {
+                                        "type": "string"
+                                    },
+                                    "signature_algorithm": {
+                                        "type": "string"
+                                    },
+                                    "valid_from": {
+                                        "type": "array",
+                                        "items": [
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "integer"
+                                            }
+                                        ]
+                                    },
+                                    "valid_to": {
+                                        "type": "array",
+                                        "items": [
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "integer"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "required": [
+                        "certificates",
+                        "content_info",
+                        "signer_info",
+                        "version"
+                    ]
+                },
+                "load_configuration": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "description": "load configuration structure (see https://docs.microsoft.com/en-us/windows/win32/debug/pe-format#the-load-configuration-structure-image-only)",
+                    "properties": {
+                        "version": {
+                            "type": "string",
+                            "enum": [
+                                "UNKNOWN",
+                                "SEH",
+                                "WIN_8_1",
+                                "WIN10_0_9879",
+                                "WIN10_0_14286",
+                                "WIN10_0_14383",
+                                "WIN10_0_14901",
+                                "WIN10_0_15002",
+                                "WIN10_0_16237"
+                            ],
+                            "description": "SDK Version of the structure"
+                        },
+                        "characteristics": {
+                            "type": "integer",
+                            "description": "Flags that indicate attributes of the file, currently unused"
+                        },
+                        "timedatestamp": {
+                            "type": "integer",
+                            "description": "Date and time stamp value. The value is represented in the number of seconds that have elapsed since midnight (00:00:00), January 1, 1970, Universal Coordinated Time, according to the system clock. The time stamp can be printed by using the C runtime (CRT) time function."
+                        },
+                        "major_version": {
+                            "type": "integer",
+                            "description": "Major version number."
+                        },
+                        "minor_version": {
+                            "type": "integer",
+                            "description": "Minor version number."
+                        },
+                        "global_flags_clear": {
+                            "type": "integer",
+                            "description": "The global loader flags to clear for this process as the loader starts the process."
+                        },
+                        "global_flags_set": {
+                            "type": "integer",
+                            "description": "The global loader flags to set for this process as the loader starts the process."
+                        },
+                        "critical_section_default_timeout": {
+                            "type": "integer",
+                            "description": "The default timeout value to use for this process's critical sections that are abandoned."
+                        },
+                        "decommit_free_block_threshold": {
+                            "type": "integer",
+                            "description": "Memory that must be freed before it is returned to the system, in bytes."
+                        },
+                        "decommit_total_free_threshold": {
+                            "type": "integer",
+                            "description": "Total amount of free memory, in bytes."
+                        },
+                        "lock_prefix_table": {
+                            "type": "integer",
+                            "description": "[x86 only] The VA of a list of addresses where the LOCK prefix is used so that they can be replaced with NOP on single processor machines."
+                        },
+                        "maximum_allocation_size": {
+                            "type": "integer",
+                            "description": "Maximum allocation size, in bytes."
+                        },
+                        "virtual_memory_threshold": {
+                            "type": "integer",
+                            "description": "Maximum virtual memory size, in bytes."
+                        },
+                        "process_affinity_mask": {
+                            "type": "integer",
+                            "description": "Setting this field to a non-zero value is equivalent to calling SetProcessAffinityMask with this value during process startup (.exe only)"
+                        },
+                        "process_heap_flags": {
+                            "type": "integer",
+                            "description": "Process heap flags that correspond to the first argument of the HeapCreate function. These flags apply to the process heap that is created during process startup."
+                        },
+                        "csd_version": {
+                            "type": "integer",
+                            "description": "The service pack version identifier."
+                        },
+                        "reserved1": {
+                            "type": "integer",
+                            "description": "Must be zero."
+                        },
+                        "editlist": {
+                            "type": "integer",
+                            "description": "Reserved for use by the system."
+                        },
+                        "security_cookie": {
+                            "type": "integer",
+                            "description": "A pointer to a cookie that is used by Visual C++ or GS implementation."
+                        },
+                        "se_handler_table": {
+                            "type": "integer",
+                            "description": "[x86 only] The VA of the sorted table of RVAs of each valid, unique SE handler in the image. "
+                        },
+                        "se_handler_count": {
+                            "type": "integer",
+                            "description": "[x86 only] The count of unique handlers in the table."
+                        },
+                        "guard_cf_check_function_pointer": {
+                            "type": "integer",
+                            "description": "The VA where Control Flow Guard check-function pointer is stored."
+                        },
+                        "guard_cf_dispatch_function_pointer": {
+                            "type": "integer",
+                            "description": "The VA where Control Flow Guard dispatch-function pointer is stored."
+                        },
+                        "guard_cf_function_table": {
+                            "type": "integer",
+                            "description": "The VA of the sorted table of RVAs of each Control Flow Guard function in the image."
+                        },
+                        "guard_cf_function_count": {
+                            "type": "integer",
+                            "description": "The count of unique RVAs in the above table."
+                        },
+                        "guard_flags": {
+                            "type": "integer",
+                            "description": "Control Flow Guard related flags."
+                        },
+                        "code_integrity": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                                "catalog": {
+                                    "type": "integer"
+                                },
+                                "catalog_offset": {
+                                    "type": "integer"
+                                },
+                                "flags": {
+                                    "type": "integer"
+                                },
+                                "reserved": {
+                                    "type": "integer"
+                                }
+                            },
+                            "required": [
+                                "flags",
+                                "catalog",
+                                "catalog_offset",
+                                "reserved"
+                            ]
+                        },
+                        "guard_address_taken_iat_entry_table": {
+                            "type": "integer"
+                        },
+                        "guard_address_taken_iat_entry_count": {
+                            "type": "integer"
+                        },
+                        "guard_long_jump_target_table": {
+                            "type": "integer"
+                        },
+                        "guard_long_jump_target_count": {
+                            "type": "integer"
+                        },
+                        "dynamic_value_reloc_table": {
+                            "type": "integer"
+                        },
+                        "hybrid_metadata_pointer": {
+                            "type": "integer"
+                        },
+                        "guard_rf_failure_routine": {
+                            "type": "integer"
+                        },
+                        "guard_rf_failure_routine_function_pointer": {
+                            "type": "integer"
+                        },
+                        "dynamic_value_reloctable_offset": {
+                            "type": "integer"
+                        },
+                        "dynamic_value_reloctable_section": {
+                            "type": "integer"
+                        },
+                        "reserved2": {
+                            "type": "integer"
+                        },
+                        "guard_rf_verify_stackpointer_function_pointer": {
+                            "type": "integer"
+                        },
+                        "hotpatch_table_offset": {
+                            "type": "integer"
+                        },
+                        "reserved3": {
+                            "type": "integer"
+                        },
+                        "addressof_unicode_string": {
+                            "type": "integer"
+                        }
+                    },
+                    "required": [
+                        "version",
+                        "characteristics",
+                        "timedatestamp",
+                        "major_version",
+                        "minor_version",
+                        "global_flags_clear",
+                        "global_flags_set",
+                        "critical_section_default_timeout",
+                        "decommit_free_block_threshold",
+                        "decommit_total_free_threshold",
+                        "lock_prefix_table",
+                        "maximum_allocation_size",
+                        "virtual_memory_threshold",
+                        "process_affinity_mask",
+                        "process_heap_flags",
+                        "csd_version",
+                        "reserved1",
+                        "editlist",
+                        "security_cookie"
+                    ]
+                }
+            }
+        }
+    },
+    "required": [
+        "label",
+        "date",
+        "file_size",
+        "hashes",
+        "peid",
+        "trid",
+        "strings",
+        "lief",
+        "id"
+    ],
+    "definitions": {
+        "resource_directory": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "characteristics": {
+                    "type": "integer"
+                },
+                "time_date_stamp": {
+                    "type": "integer"
+                },
+                "major_version": {
+                    "type": "integer"
+                },
+                "minor_version": {
+                    "type": "integer"
+                },
+                "numberof_name_entries": {
+                    "type": "integer"
+                },
+                "numberof_id_entries": {
+                    "type": "integer"
+                },
+                "childs": {
+                    "type": "array",
+                    "uniqueItems": false,
+                    "items": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/definitions/resource_directory"
+                            },
+                            {
+                                "$ref": "#/definitions/resource_data"
+                            }
+                        ]
+                    }
+                }
+            },
+            "required": [
+                "id",
+                "characteristics",
+                "time_date_stamp",
+                "major_version",
+                "minor_version",
+                "numberof_name_entries",
+                "numberof_id_entries"
+            ]
+        },
+        "resource_data": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "code_page": {
+                    "type": "integer"
+                },
+                "reserved": {
+                    "type": "integer"
+                },
+                "offset": {
+                    "type": "integer"
+                },
+                "hash": {
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "code_page",
+                "reserved",
+                "offset",
+                "hash"
+            ]
+        }
+    }
+}

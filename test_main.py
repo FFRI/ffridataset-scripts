@@ -5,6 +5,7 @@ import json
 import os
 import pefile
 import shutil
+from pypeid import PEiDScanner
 
 
 dir_path = "testbin"
@@ -40,7 +41,8 @@ class TestMain(unittest.TestCase):
         self.assertEqual(expected, actual)
 
     def test_compute_peid(self):
-        actual = main.compute_peid(bin_path)
+        peid_scanner = PEiDScanner()
+        actual = peid_scanner.scan_file(bin_path)
         with open(os.path.join(dir_path, "test_peid.json")) as f:
             expected = json.load(f)
         self.assertEqual(expected, actual)

@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """
 Author of this code work, Yuki Mogi. c FFRI, Inc. 2019
+Author of this code work, Koh M. Nakagawa. c FFRI, Inc. 2020
 """
 
 import tlsh
@@ -15,12 +16,15 @@ import hashlib
 import pandas as pd
 import numpy as np
 import os
-import shutil
 import argparse
 import traceback
 import yara
 import logzero
+import errno
+import sys
+import shutil
 from logzero import logger
+from pypeid import PEiDScanner
 
 
 class Scanner:
@@ -63,7 +67,13 @@ class Computer:
         self.__logger.info(f"processing {orig_path}")
 
         path = os.path.basename(orig_path)
-        shutil.copyfile(orig_path, path)
+        try:
+            shutil.copyfile(orig_path, path)
+        except shutil.SameFileError as e:
+            self.__logger.error("DO NOT STORE MALWARE AND CLEANWARE IN THE WORKING DIRECTORY")
+            self.__logger.error("See README.md for detail")
+            raise e
+
         try:
             args = self.__scanner.scan(path)
         except RuntimeError:
@@ -88,9 +98,18 @@ class Computer:
                     return (
                         args_dict[args] if method is None else method(args_dict[args])
                     )
+            except OSError as err:
+                self.__logger.error(traceback.format_exc())
+                if err.errno == errno.ENOMEM:
+                    self.__logger.error("Cannot allocate memory exception is thrown")
+                    self.__logger.error("This may occur due to memory leak problems of LIEF")
+                    self.__logger.error("So this process exits")
+                    self.__logger.error(f"Processed file {orig_path}")
+                    os.remove(path)
+                    raise err
             except:
                 self.__logger.warning(
-                    f"some method faild. path:{orig_path}, {traceback.format_exc()}"
+                    f"Exception is thrown. path:{orig_path}, {traceback.format_exc()}"
                 )
                 if self.__error_mode == "skip":
                     self.__logger.warning(f"skipping. path:{orig_path}")
@@ -104,8 +123,8 @@ class Computer:
         }
         os.remove(path)
         result.update(id=result["hashes"]["sha256"])
-        with open(os.path.join(out_dir, result["id"] + ".json"), "w") as f:
-            json.dump(result, f)
+        with open(os.path.join(out_dir, result["id"] + ".json"), "w") as fout:
+            fout.write(json.dumps(result) + "\n")
 
 
 def open_file(path):
@@ -134,38 +153,6 @@ class PEDetector:
         return is_pe_file_value
 
 
-def format_list(r):
-    return r.replace('"', "").replace("[", "").replace("]", "").split(" ")
-
-
-def format_peid(peid):
-    if "mutex" not in peid:
-        peid.update(mutex="no")
-    if "contains base64" not in peid:
-        peid.update({"contains base64": "no"})
-    return peid
-
-
-def compute_peid(path):
-    peid_list = (
-        subprocess.run(["./PEiD", path], stdout=subprocess.PIPE, check=True)
-        .stdout.decode("utf-8")
-        .split("\n")[4:-2]
-    )
-    result = {
-        (i.split(":")[0][2:-1])
-        if ":" in i
-        else "contains base64": i.split(":")[1][1:]
-        if ":" in i
-        else "yes"
-        for i in peid_list
-    }
-    anti = format_list(result["AntiDebug"]) if "AntiDebug" in result else []
-    PEiD = format_list(result["PEiD"]) if "PEiD" in result else []
-    result.update(AntiDebug=anti, PEiD=PEiD)
-    return format_peid(result)
-
-
 def compute_trid(path):
     trid_list = (
         subprocess.run(
@@ -188,7 +175,7 @@ def get_strings(path):
 
 
 def compute_lief(path):
-    return json.loads(lief.to_json(lief.parse(path)))
+    return json.loads(lief.to_json(lief.PE.parse(path)))
 
 
 def compute_hashes(dict_arg):
@@ -233,7 +220,7 @@ def get_filesize(path):
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Make a dataset like FFRI Dataset 2019!"
+        description="Make a dataset like FFRI Dataset!"
     )
     parser.add_argument("--csv", required=True, help="<path/to/csv>")
     parser.add_argument("--out", required=True, help="<path/to/output_dataset_dir>")
@@ -256,17 +243,19 @@ def main():
     }
     pe_scanner.register_scanners(scanners)
 
+    peid_scanner = PEiDScanner(logger)
+
     pe_computer = Computer(pe_scanner, logger, args.error_mode)
     computers = {
         "label": {"method": None, "args": "label"},
         "date": {
-            "method": lambda x: x if x is not None and x is not np.nan else None,
+            "method": lambda x: x if x is not None and x == x else None,
             "args": "date",
         },
         "file_size": {"method": get_filesize, "args": "path"},
         "hashes": {"method": compute_hashes, "args": ["sample", "pe"]},
         "lief": {"method": compute_lief, "args": "path"},
-        "peid": {"method": compute_peid, "args": "path"},
+        "peid": {"method": peid_scanner.scan_file, "args": "path"},
         "trid": {"method": compute_trid, "args": "path"},
         "strings": {"method": get_strings, "args": "path"},
     }
@@ -277,8 +266,11 @@ def main():
     for index, row in df.iterrows():
         try:
             if not pe_detector.is_pe_file(row.path):
+                logger.warning(f"{row.path} is not PE file. So skip this.")
                 continue
             pe_computer.run(row.path, args.out, {"label": row.label, "date": row.date})
+        except OSError:
+            sys.exit(os.EX_SOFTWARE)
         except RuntimeError:
             continue
         except:
