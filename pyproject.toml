@@ -1,0 +1,36 @@
+[tool.poetry]
+name = "ffridataset-scripts"
+version = "v2021.1"
+description = "This script makes datasets like FFRI Dataset"
+authors = ["Yuki Mogi", "Koh M. Nakagawa"]
+license = "Apache-2"
+readme = "README.md"
+homepage = "https://github.com/FFRI/ffridataset-scripts"
+repository = "https://github.com/FFRI/ffridataset-scripts"
+include = ["LICENSE"]
+keywords = ["Malware", "FFRI Dataset", "Machine Learning", "MWS/CSS"]
+
+[tool.poetry.dependencies]
+python = "^3.6,<3.9"
+ssdeep = "3.4"
+pyimpfuzzy = "0.5"
+pefile = "2019.4.18"
+yara-python = "3.11.0"
+pypeid = {git = "https://github.com/FFRI/pypeid.git", rev = "0.1.0"}
+pehash = {git = "https://github.com/knowmalware/pehash.git", develop = true, rev = "v0.9.1"}
+lief = { file = "dist_lief/lief-0.12.0.dev0-cp38-cp38-linux_x86_64.whl"}
+typer = "^0.3.2"
+loguru = "^0.5.3"
+numpy = "^1.19.5"
+pandas = "^0.25.3"
+joblib = "^1.0.1"
+
+[tool.poetry.dev-dependencies]
+black = "^20.8b1"
+pip-licenses = "^3.3.1"
+isort = "^5.8.0"
+snakeviz = "^2.1.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

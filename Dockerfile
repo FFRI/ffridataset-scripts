@@ -1,37 +1,40 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
 VOLUME /work/data
 VOLUME /work/out_dir
 VOLUME /work/testbin
+VOLUME /work/dist_lief
 
 WORKDIR /work
 
 COPY main.py /work
 COPY test_main.py /work
-COPY triddefs_dir/triddefs-dataset2020.trd /work/triddefs.trd
-COPY Pipfile /work
-COPY Pipfile.lock /work
-COPY dist_lief/lief-0.11.0.ffridataset2020-cp36-none-linux_x86_64.whl /work
+COPY triddefs_dir/triddefs-dataset2021.trd /work/triddefs.trd
+COPY poetry.lock /work
+COPY pyproject.toml /work
+COPY dist_lief/lief-0.12.0.dev0-cp38-cp38-linux_x86_64.whl /work/dist_lief/lief-0.12.0.dev0-cp38-cp38-linux_x86_64.whl
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV LC_ALL=C.UTF-8
 ENV LANG=C.UTF-8
 
 RUN apt update && \
-    apt install -y --no-install-recommends wget git gcc g++ make autoconf libfuzzy-dev unar cmake mlocate python3 python3-pip python3-dev libssl1.0.0 libssl-dev python3-setuptools && \
+    apt install -y --no-install-recommends wget git gcc g++ make autoconf libfuzzy-dev unar cmake mlocate python3 python3-pip python3-dev libssl-dev python3-setuptools libglib2.0-0 curl libboost-regex-dev libboost-program-options-dev libboost-system-dev libboost-filesystem-dev build-essential && \
     rm -rf /var/lib/apt/lists/*
 
 RUN pip3 install wheel&& \
-    pip3 install pipenv&& \
-    pipenv sync && \
-    pipenv run pip install lief-0.11.0.ffridataset2020-cp36-none-linux_x86_64.whl
+    curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python3&& \
+    . /root/.poetry/env&&\
+    poetry update --no-dev
+
+ENV PATH /root/.poetry/bin:$PATH
 
 RUN git clone https://github.com/trendmicro/tlsh.git && \
     cd tlsh && \
     git checkout 4.2.1 && \
     ./make.sh && \
     cd py_ext && \
-    pipenv run python ./setup.py install && \
+    poetry run python ./setup.py install && \
     cd ../../ && \
     rm -rf tlsh
 
@@ -41,5 +44,16 @@ RUN wget mark0.net/download/trid_linux_64.zip && \
     chmod u+x trid && \
     rm -rf trid_linux64 trid_linux64.zip
 
-ENTRYPOINT ["pipenv", "run", "python"]
+RUN git clone https://github.com/JusticeRage/Manalyze.git && \
+    cd Manalyze && \
+    git checkout 04cee36 && \
+    cmake . && \
+    make && \
+    cd ../
+
+RUN wget https://github.com/horsicq/DIE-engine/releases/download/3.01/die_lin64_portable_3.01.tar.gz && \
+    tar xzf die_lin64_portable_3.01.tar.gz && \
+    rm die_lin64_portable_3.01.tar.gz
+
+ENTRYPOINT ["poetry", "run", "python"]
 

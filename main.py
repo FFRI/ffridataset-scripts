@@ -4,32 +4,78 @@ Author of this code work, Yuki Mogi. c FFRI, Inc. 2019
 Author of this code work, Koh M. Nakagawa. c FFRI, Inc. 2020
 """
 
-import tlsh
-import ssdeep
+import errno
+import hashlib
+import json
+import os
+import shutil
+import subprocess
+import sys
+import traceback
+from enum import Enum
+
+import lief
+import pandas as pd
 import pefile
 import pehash
 import pyimpfuzzy
-import lief
-import json
-import subprocess
-import hashlib
-import pandas as pd
-import numpy as np
-import os
-import argparse
-import traceback
+import ssdeep
+import typer
 import yara
-import logzero
-import errno
-import sys
-import shutil
-from logzero import logger
+from loguru import logger
 from pypeid import PEiDScanner
+from joblib import Parallel, delayed
+import tlsh
+
+app = typer.Typer()
+
+
+class ErrorWrapper:
+    def __init__(self, value, is_left):
+        self.__value = value
+        self.__is_left = is_left
+
+    def is_left(self):
+        return self.__is_left
+
+    def unwrap(self):
+        return self.__value
+
+
+class Right(ErrorWrapper):
+    def __init__(self, value):
+        super().__init__(value, False)
+
+
+class Left(ErrorWrapper):
+    def __init__(self, value):
+        super().__init__(value, True)
+
+
+class LeftWithOS(ErrorWrapper):
+    def __init__(self, value):
+        super().__init__(value, True)
+
+
+def try_catch_with_traceback(func):
+    try:
+        return Right(func())
+    except OSError as e:
+        return LeftWithOS({"traceback": traceback.format_exc(), "error": e})
+    except Exception as e:
+        return Left({"traceback": traceback.format_exc(), "error": e})
+
+
+def unify_dict(list_of_dicts):
+    result = {}
+    for d in list_of_dicts:
+        result.update(d)
+    return result
 
 
 class Scanner:
-    def __init__(self, logger):
-        self.__logger = logger
+    def __init__(self, logger_):
+        self.__logger = logger_
 
     def register_scanners(self, scanners):
         self.__scanners = scanners
@@ -70,7 +116,9 @@ class Computer:
         try:
             shutil.copyfile(orig_path, path)
         except shutil.SameFileError as e:
-            self.__logger.error("DO NOT STORE MALWARE AND CLEANWARE IN THE WORKING DIRECTORY")
+            self.__logger.error(
+                "DO NOT STORE MALWARE AND CLEANWARE IN THE WORKING DIRECTORY"
+            )
             self.__logger.error("See README.md for detail")
             raise e
 
@@ -90,37 +138,64 @@ class Computer:
             args.update(optional_args)
 
         def execute(args_dict, args, method):
-            try:
-                if isinstance(args, list):
-                    dict_arg = {k: args_dict[k] for k in args}
-                    return dict_arg if method is None else method(dict_arg)
-                else:
-                    return (
-                        args_dict[args] if method is None else method(args_dict[args])
-                    )
-            except OSError as err:
-                self.__logger.error(traceback.format_exc())
-                if err.errno == errno.ENOMEM:
-                    self.__logger.error("Cannot allocate memory exception is thrown")
-                    self.__logger.error("This may occur due to memory leak problems of LIEF")
-                    self.__logger.error("So this process exits")
-                    self.__logger.error(f"Processed file {orig_path}")
-                    os.remove(path)
-                    raise err
-            except:
-                self.__logger.warning(
-                    f"Exception is thrown. path:{orig_path}, {traceback.format_exc()}"
-                )
-                if self.__error_mode == "skip":
-                    self.__logger.warning(f"skipping. path:{orig_path}")
-                    os.remove(path)
-                    raise RuntimeError("Computing failed")
-                return None
+            if isinstance(args, list):
+                dict_arg = {k: args_dict[k] for k in args}
+                return dict_arg if method is None else method(dict_arg)
+            else:
+                return args_dict[args] if method is None else method(args_dict[args])
 
-        result = {
-            k: execute(args, v["args"], v["method"])
-            for k, v in self.__computers.items()
-        }
+        def handle_errors(left_values):
+            self.__logger.warning("Some errors occurred")
+            for os_error in left_values:
+                if type(os_error) == LeftWithOS:
+                    if os_error.unwrap()["error"].errno == errno.ENOMEM:
+                        self.__logger.error(
+                            "Cannot allocate memory exception is thrown"
+                        )
+                        self.__logger.error(
+                            "This may occur due to memory leak problems of LIEF"
+                        )
+                        self.__logger.error("So this process exits")
+                        self.__logger.error(f"Processed file {orig_path}")
+                        os.remove(path)
+                        raise os_error.unwrap()["error"]
+                else:
+                    self.__logger.warning(
+                        f"Exception is thrown. path:{orig_path}, {os_error.unwrap()['traceback']}"
+                    )
+                    if self.__error_mode == "skip":
+                        self.__logger.warning(f"skipping. path:{orig_path}")
+                        os.remove(path)
+                        raise RuntimeError("Computing failed")
+
+        def handle_wrapped_result(wrapped_result):
+            wrapped_values = wrapped_result.values()
+            left_values = [
+                wrapped_value
+                for wrapped_value in wrapped_values
+                if wrapped_value.is_left()
+            ]
+            if not left_values:
+                return {k: v.unwrap() for k, v in wrapped_result.items()}
+            handle_errors(left_values)
+            return {
+                k: v.unwrap() if not v.is_left() else None
+                for k, v in wrapped_result.items()
+            }
+
+        def execute_wrapped(k, v):
+            return {
+                k: try_catch_with_traceback(
+                    lambda: execute(args, v["args"], v["method"])
+                )
+            }
+
+        wrapped_result_list = Parallel(n_jobs=2, backend="threading")(
+            [delayed(execute_wrapped)(k, v) for k, v in self.__computers.items()]
+        )
+        wrapped_result = unify_dict(wrapped_result_list)
+        result = handle_wrapped_result(wrapped_result)
+
         os.remove(path)
         result.update(id=result["hashes"]["sha256"])
         with open(os.path.join(out_dir, result["id"] + ".json"), "w") as fout:
@@ -140,11 +215,11 @@ def format_sample_and_pe(dict_to_format):
 
 
 class PEDetector:
-    def __init__(self, logger):
+    def __init__(self, logger_):
         self.__rule = yara.compile(
             source="rule pe { condition: uint16(0) == 0x5A4D and uint32(uint32(0x3C)) == 0x00004550 }"
         )
-        self.__logger = logger
+        self.__logger = logger_
 
     def is_pe_file(self, path):
         is_pe_file_value = self.__rule.match(path) != []
@@ -163,6 +238,33 @@ def compute_trid(path):
     )
     result = {"".join(i.split()[1:]): i.split()[0] for i in trid_list}
     return result
+
+
+def compute_die(path):
+    raw_output = subprocess.run(
+        ["/bin/sh", "./die_lin64_portable/diec.sh", "-j", os.path.basename(path)],
+        stdout=subprocess.PIPE,
+        check=True,
+    ).stdout.decode("utf-8")
+    return json.loads(raw_output)
+
+
+def compute_manalyze(path):
+    raw_output = subprocess.run(
+        # NOTE: The information obtained by "--dump=dos" is finally ignored.
+        # NOTE: The reason why we specify this flag is to avoid the bug of parsing resources in Manalyze.
+        ["./Manalyze/bin/manalyze", "--dump=dos", "--output=json", "--plugins=packer", os.path.basename(path)],
+        stdout=subprocess.PIPE,
+        check=True,
+        errors="ignore",
+    ).stdout
+    json_output = json.loads(raw_output)
+    result = list(json_output.values())[0]
+    if "packer" in result["Plugins"].keys():
+        packer_info = result["Plugins"]["packer"]
+    else:
+        packer_info = None
+    return packer_info
 
 
 def get_strings(path):
@@ -218,23 +320,29 @@ def get_filesize(path):
     return os.stat(path).st_size
 
 
-def main():
-    parser = argparse.ArgumentParser(
-        description="Make a dataset like FFRI Dataset!"
-    )
-    parser.add_argument("--csv", required=True, help="<path/to/csv>")
-    parser.add_argument("--out", required=True, help="<path/to/output_dataset_dir>")
-    parser.add_argument(
-        "--error_mode",
-        default="ignore",
-        choices=["ignore", "skip"],
-        help="ignore: non critical errors will be ignored. skip: if an error occured, the file will be skipped. default: ignore",
-    )
-    parser.add_argument("--log", required=True, help="<path/to/log_file>")
-    args = parser.parse_args()
-    df = pd.read_csv(args.csv)
+class ErrorMode(str, Enum):
+    ignore = "ignore"
+    skip = "skip"
 
-    logzero.logfile(args.log)
+
+@app.command()
+def run(
+    csv: str = typer.Option(..., help="<path/to/csv>"),
+    out: str = typer.Option(..., help="<path/to/output_dataset_dir>"),
+    error_mode: ErrorMode = typer.Option(
+        ErrorMode.ignore,
+        "--error_mode",
+        help="ignore: non critical errors will be ignored. skip: if an error occured, the file will be skipped.",
+    ),
+    log: str = typer.Option(..., help="<path/to/log_file>"),
+    ver: str = typer.Option(
+        ..., help="version string to be included in output json file (e.g., v2021)."
+    ),
+) -> None:
+    df = pd.read_csv(csv)
+
+    ver_str = ver
+    logger.add(log)
     pe_detector = PEDetector(logger)
     pe_scanner = Scanner(logger)
     scanners = {
@@ -245,18 +353,21 @@ def main():
 
     peid_scanner = PEiDScanner(logger)
 
-    pe_computer = Computer(pe_scanner, logger, args.error_mode)
+    pe_computer = Computer(pe_scanner, logger, error_mode)
     computers = {
         "label": {"method": None, "args": "label"},
         "date": {
             "method": lambda x: x if x is not None and x == x else None,
             "args": "date",
         },
+        "version": {"method": None, "args": "version"},
         "file_size": {"method": get_filesize, "args": "path"},
         "hashes": {"method": compute_hashes, "args": ["sample", "pe"]},
         "lief": {"method": compute_lief, "args": "path"},
         "peid": {"method": peid_scanner.scan_file, "args": "path"},
         "trid": {"method": compute_trid, "args": "path"},
+        "die": {"method": compute_die, "args": "path"},
+        "manalyze_plugin_packer": {"method": compute_manalyze, "args": "path"},
         "strings": {"method": get_strings, "args": "path"},
     }
     pe_computer.register_computers(computers)
@@ -268,7 +379,11 @@ def main():
             if not pe_detector.is_pe_file(row.path):
                 logger.warning(f"{row.path} is not PE file. So skip this.")
                 continue
-            pe_computer.run(row.path, args.out, {"label": row.label, "date": row.date})
+            pe_computer.run(
+                row.path,
+                out,
+                {"label": row.label, "date": row.date, "version": ver_str},
+            )
         except OSError:
             sys.exit(os.EX_SOFTWARE)
         except RuntimeError:
@@ -281,4 +396,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    app()
