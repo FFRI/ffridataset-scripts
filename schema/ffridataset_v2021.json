@@ -908,7 +908,7 @@
                                                 "SECTION",
                                                 "REL | ARM_MOV32T | THUMB_MOV32 | RISCV_LOW12I",
                                                 "RISCV_LOW12S",
-                                                "MIPS_JMPADDR16 | IA64_DIR64",
+                                                "MIPS_JMPADDR16 | IA64_IMM64",
                                                 "DIR64",
                                                 "HIGH3ADJ",
                                                 "Out of range"
@@ -2326,13 +2326,67 @@
                                 "type": "integer"
                             },
                             "base_type": {
-                                "type": "string"
+                                "type": "string",
+                                "enum": [
+                                    "NULL",
+                                    "VOID",
+                                    "CHAR",
+                                    "SHORT",
+                                    "INT",
+                                    "LONG",
+                                    "FLOAT",
+                                    "DOUBLE",
+                                    "STRUCT",
+                                    "UNION",
+                                    "ENUM",
+                                    "MOE",
+                                    "BYTE",
+                                    "WORD",
+                                    "UINT",
+                                    "DWORD",
+                                    "Out of range"
+                                ]
                             },
                             "complex_type": {
-                                "type": "string"
+                                "type": "string",
+                                "enum": [
+                                    "NULL",
+                                    "POINTER",
+                                    "FUNCTION",
+                                    "ARRAY",
+                                    "COMPLEX_TYPE_SHIFT",
+                                    "Out of range"
+                                ]
                             },
                             "storage_class": {
-                                "type": "string"
+                                "type": "string",
+                                "enum": [
+                                    "END_OF_FUNCTION",
+                                    "NULL",
+                                    "AUTOMATIC",
+                                    "EXTERNAL",
+                                    "STATIC",
+                                    "REGISTER",
+                                    "EXTERNAL_DEF",
+                                    "LABEL",
+                                    "UNDEFINED_LABEL",
+                                    "MEMBER_OF_STRUCT",
+                                    "UNION_TAG",
+                                    "TYPE_DEFINITION",
+                                    "UDEFINED_STATIC",
+                                    "ENUM_TAG",
+                                    "MEMBER_OF_ENUM",
+                                    "REGISTER_PARAM",
+                                    "BIT_FIELD",
+                                    "BLOCK",
+                                    "FUNCTION",
+                                    "END_OF_STRUCT",
+                                    "FILE",
+                                    "SECTION",
+                                    "WEAK_EXTERNAL",
+                                    "CLR_TOKEN",
+                                    "Out of range"
+                                ]
                             },
                             "numberof_aux_symbols": {
                                 "type": "integer"
@@ -2665,8 +2719,7 @@
             "description": "JSON Schema for Manalyze packer plugin json output",
             "required": [
                 "level",
-                "plugin_output",
-                "summary"
+                "plugin_output"
             ],
             "additionalProperties": false,
             "properties": {
