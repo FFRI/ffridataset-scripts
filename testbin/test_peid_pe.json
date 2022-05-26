@@ -1,0 +1,14 @@
+{
+  "PE": "64 bit",
+  "DLL": "no",
+  "Packed": "no",
+  "Anti-Debug": "yes",
+  "GUI Program": "no",
+  "Console Program": "yes",
+  "mutex": "no",
+  "contains base64": "yes",
+  "PEiD": [
+    "Microsoft_Visual_Cpp_80_DLL"
+  ],
+  "AntiDebug": []
+}

@@ -1,0 +1,24 @@
+{
+  "detects": [
+    {
+      "filetype": "PE64",
+      "parentfilepart": "Header",
+      "values": [
+        {
+          "info": "-",
+          "name": "Microsoft Visual C++",
+          "string": "Compiler: Microsoft Visual C++(-)[-]",
+          "type": "Compiler",
+          "version": "-"
+        },
+        {
+          "info": "Console64,console",
+          "name": "Microsoft Linker",
+          "string": "Linker: Microsoft Linker(14.21**)[Console64,console]",
+          "type": "Linker",
+          "version": "14.21**"
+        }
+      ]
+    }
+  ]
+}

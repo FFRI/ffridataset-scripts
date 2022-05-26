@@ -1,6 +1,6 @@
 # FFRI Dataset scripts
 
-You can make datasets like FFRI Dataset using this script.
+You can make datasets in the form of the FFRI dataset using this script.
 
 ## Requirements
 
@@ -9,7 +9,7 @@ We recommend that you use Docker for making datasets. See [Using Docker](#Using-
 Alternatively, you can use this script by installing the following dependencies on [tested platforms](#Tested).
 See [Run this script natively](#Run-This-Script-Natively) for more details.
 
-- Python 3.8
+- Python 3.9
 - [Poetry](https://python-poetry.org/)
 
 ## Using Docker
@@ -31,7 +31,7 @@ Note that file paths in a CSV file should be specified as relative paths to the 
 You can make datasets as follows.
 
 ```
-docker build --tag ffridataset-scripts .
+docker build --target production --tag ffridataset-scripts .
 docker run -v <path/to/here>/testbin:/work/testbin ffridataset-scripts test_main.py
 # Note that data directory contains a CSV file and executable files which you want to process.
 docker run -v <path/to/here>/data:/work/data -v <path/to/here>/out_dir:/work/out_dir ffridataset-scripts main.py --csv ./data/target.csv --out ./out_dir --log ./dataset.log --ver <version_string>
@@ -41,7 +41,22 @@ Please make sure that:
 
 - The host directory that contains both a csv file and executable files is mounted to the container's `/work/data`.
 - The host directory in which you want to output JSON files is mounted to the container's `/work/out_dir`.
-- `<version_string>` should be vYYYY (e.g., `<version_string>` is v2021 for FFRI Dataset 2021).
+- `<version_string>` should be vYYYY (e.g., `<version_string>` is v2022 for FFRI Dataset 2022).
+
+To enable non-PE files to be processed, use `--not-pe-only` flag.
+
+```
+docker run -v <path/to/here>/data:/work/data -v <path/to/here>/out_dir:/work/out_dir ffridataset-scripts main.py --csv ./data/target.csv --out ./out_dir --log ./dataset.log --ver <version_string> --not-pe-only
+```
+
+If you want to use the script that produced the FFRI Dataset 2022, build `dataset` image as follows.
+
+```
+docker build --target dataset --tag ffridataset-scripts .
+docker run -v <path/to/here>/testbin:/work/testbin ffridataset-scripts test_main.py
+# Note that data directory contains a CSV file and executable files which you want to process.
+docker run -v <path/to/here>/data:/work/data -v <path/to/here>/out_dir:/work/out_dir ffridataset-scripts main.py --csv ./data/target.csv --out ./out_dir --log ./dataset.log --ver <version_string>
+```
 
 ## Run This Script Natively
 
@@ -52,35 +67,29 @@ Please make sure that:
 ```
 sudo apt update
 
-sudo apt install wget git gcc g++ make autoconf libfuzzy-dev unar cmake mlocate python3 python3-pip python3-dev libssl-dev python3-setuptools libglib2.0-0 libboost-regex-dev libboost-program-options-dev libboost-system-dev libboost-filesystem-dev build-essential
+sudo apt install --no-install-recommends wget git gcc g++ make autoconf libfuzzy-dev unar cmake mlocate python3.9 python3-pip python3.9-dev libssl-dev python3-setuptools libglib2.0-0 curl libboost-regex-dev libboost-program-options-dev libboost-system-dev libboost-filesystem-dev build-essential libpcre2-dev libdouble-conversion-dev
 
 poetry shell
-poetry update --no-dev
-
-git clone https://github.com/trendmicro/tlsh.git
-cd tlsh
-git checkout 4.2.1
-./make.sh
-cd py_ext
-python ./setup.py install
-cd ../..
+poetry install --no-dev
 
 wget mark0.net/download/trid_linux_64.zip
 unar trid_linux_64.zip
 cp trid_linux_64/trid ./
 chmod u+x trid
-cp triddefs_dir/triddefs-dataset2021.trd triddefs.trd
+cp triddefs_dir/triddefs-dataset2022.trd triddefs.trd
 
-wget https://github.com/horsicq/DIE-engine/releases/download/3.01/die_lin64_portable_3.01.tar.gz
-tar xzvf die_lin64_portable_3.01.tar.gz
+cp die/die_3.05_portable_Ubuntu_20.04_amd64.tar.gz ./
+tar xzf die_3.05_portable_Ubuntu_20.04_amd64.tar.gz
 
 git clone https://github.com/JusticeRage/Manalyze.git
 cd Manalyze
-git checkout 04cee36
+git checkout 639735735ef9a3753def23d2baee0d1e55a7c828
 cmake .
 make
 cd ../
 ```
+
+If something is wrong, see Dockerfile.
 
 ### Run Tests
 
@@ -110,10 +119,10 @@ python main.py --csv <path/to/csv> --out <path/to/output_dataset_dir> --log <pat
 - TrID definition files included in [triddefs_dir](triddefs_dir) are redistributed with the permission from the TrID author, Marco Pontello.
 - The latest definition file can be obtained from the [TrID website](https://mark0.net/soft-trid-e.html).
 
-## Notes About LIEF
+## Notes About DIE
 
-- This script uses the [patched version of LIEF](https://github.com/kohnakagawa/LIEF/tree/dev/ffridataset_2021).
-- This LIEF is redistributed under [Apache-2.0 LICENSE](third-party-licenses/LIEF) as [whl file](dist_lief/lief-0.12.0.dev0-cp38-cp38-linux_x86_64.whl).
+- We use the modified version of DIE that we fixed [an issue](https://github.com/horsicq/Detect-It-Easy/issues/117), which we provide in the `die` directory.
+- See the original DIE License file in the `third-party-licenses` directory.
 
 ## Tested
 
@@ -134,7 +143,7 @@ mkdir measurement
 Next, build a docker image by specifying Dockerfile.measurement.
 
 ```
-docker build --tag ffridataset-scripts . -f .\Dockerfile.measurement
+docker build --target measurement --tag ffridataset-scripts .
 ```
 
 Then, run the following command to make executables and a csv file.
@@ -146,7 +155,7 @@ docker run -v <path/to/here>\testbin:/work/testbin -v <path/to/here>\measurement
 Now you're ready to do profiling. To generate a cProfile result file, run
 
 ```
-docker run -v <path/to/here>\measurement:/work/data -v <path/to/here>\out_dir:/work/out_dir ffridataset-scripts poetry run python -m cProfile -o ./out_dir/profiling.stats main.py --csv ./data/test.csv --out ./out_dir --log ./test.log --ver v2021
+docker run -v <path/to/here>\measurement:/work/data -v <path/to/here>\out_dir:/work/out_dir ffridataset-scripts poetry run python -m cProfile -o ./out_dir/profiling.stats main.py --csv ./data/test.csv --out ./out_dir --log ./test.log --ver v2022
 ```
 
 Then type
@@ -159,6 +168,6 @@ and you can see the profiling result through your browser.
 
 ## Author
 
-Yuki Mogi. &copy; FFRI, Inc. 2019
+Yuki Mogi. &copy; FFRI, Inc. 2019-2022
 
-Koh M. Nakagawa. &copy; FFRI, Inc. 2019
+Koh M. Nakagawa. &copy; FFRI, Inc. 2019-2022

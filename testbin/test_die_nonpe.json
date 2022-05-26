@@ -1,0 +1,17 @@
+{
+  "detects": [
+    {
+      "filetype": "Binary",
+      "parentfilepart": "Header",
+      "values": [
+        {
+          "info": "LF",
+          "name": "plain text",
+          "string": "Format: plain text[LF]",
+          "type": "Format",
+          "version": ""
+        }
+      ]
+    }
+  ]
+}

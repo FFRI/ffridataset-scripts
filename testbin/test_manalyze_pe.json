@@ -1,0 +1,10 @@
+{
+  "level": 2,
+  "plugin_output": {
+    "info_0": "Unusual section name found: UPX0",
+    "info_1": "Section UPX0 is both writable and executable.",
+    "info_2": "Unusual section name found: UPX1",
+    "info_3": "Section UPX1 is both writable and executable."
+  },
+  "summary": "The PE is packed with UPX"
+}

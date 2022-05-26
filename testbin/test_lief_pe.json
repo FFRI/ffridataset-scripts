@@ -1,0 +1,1097 @@
+{
+  "data_directories": [
+    {
+      "RVA": 0,
+      "size": 0,
+      "type": "EXPORT_TABLE"
+    },
+    {
+      "RVA": 10580,
+      "section": ".rdata",
+      "size": 180,
+      "type": "IMPORT_TABLE"
+    },
+    {
+      "RVA": 24576,
+      "section": ".rsrc",
+      "size": 480,
+      "type": "RESOURCE_TABLE"
+    },
+    {
+      "RVA": 20480,
+      "section": ".pdata",
+      "size": 408,
+      "type": "EXCEPTION_TABLE"
+    },
+    {
+      "RVA": 0,
+      "size": 0,
+      "type": "CERTIFICATE_TABLE"
+    },
+    {
+      "RVA": 28672,
+      "section": ".reloc",
+      "size": 28,
+      "type": "BASE_RELOCATION_TABLE"
+    },
+    {
+      "RVA": 8960,
+      "section": ".rdata",
+      "size": 112,
+      "type": "DEBUG"
+    },
+    {
+      "RVA": 0,
+      "size": 0,
+      "type": "ARCHITECTURE"
+    },
+    {
+      "RVA": 0,
+      "size": 0,
+      "type": "GLOBAL_PTR"
+    },
+    {
+      "RVA": 0,
+      "size": 0,
+      "type": "TLS_TABLE"
+    },
+    {
+      "RVA": 9072,
+      "section": ".rdata",
+      "size": 264,
+      "type": "LOAD_CONFIG_TABLE"
+    },
+    {
+      "RVA": 0,
+      "size": 0,
+      "type": "BOUND_IMPORT"
+    },
+    {
+      "RVA": 8192,
+      "section": ".rdata",
+      "size": 480,
+      "type": "IAT"
+    },
+    {
+      "RVA": 0,
+      "size": 0,
+      "type": "DELAY_IMPORT_DESCRIPTOR"
+    },
+    {
+      "RVA": 0,
+      "size": 0,
+      "type": "CLR_RUNTIME_HEADER"
+    },
+    {
+      "RVA": 0,
+      "size": 0,
+      "type": "RESERVED"
+    }
+  ],
+  "debug": [
+    {
+      "addressof_rawdata": 9336,
+      "characteristics": 0,
+      "code_view": {
+        "age": 1,
+        "cv_signature": "PDB_70",
+        "filename": "C:\\Users\\yuki.mogi\\source\\repos\\FFRIProject1\\x64\\Release\\FFRIProject1.pdb",
+        "signature": [
+          242,
+          42,
+          179,
+          101,
+          84,
+          64,
+          143,
+          79,
+          135,
+          230,
+          214,
+          236,
+          103,
+          246,
+          201,
+          234
+        ]
+      },
+      "major_version": 0,
+      "minor_version": 0,
+      "pointerto_rawdata": 6264,
+      "sizeof_data": 98,
+      "timestamp": 1561616129,
+      "type": "CODEVIEW"
+    },
+    {
+      "addressof_rawdata": 9436,
+      "characteristics": 0,
+      "major_version": 0,
+      "minor_version": 0,
+      "pointerto_rawdata": 6364,
+      "sizeof_data": 20,
+      "timestamp": 1561616129,
+      "type": "VC_FEATURE"
+    },
+    {
+      "addressof_rawdata": 9456,
+      "characteristics": 0,
+      "major_version": 0,
+      "minor_version": 0,
+      "pogo": {
+        "entries": [
+          {
+            "name": ".text$mn",
+            "size": 3824,
+            "start_rva": 4096
+          },
+          {
+            "name": ".text$mn$00",
+            "size": 32,
+            "start_rva": 7920
+          },
+          {
+            "name": ".text$x",
+            "size": 134,
+            "start_rva": 7952
+          },
+          {
+            "name": ".idata$5",
+            "size": 480,
+            "start_rva": 8192
+          },
+          {
+            "name": ".00cfg",
+            "size": 16,
+            "start_rva": 8672
+          },
+          {
+            "name": ".CRT$XCA",
+            "size": 8,
+            "start_rva": 8688
+          },
+          {
+            "name": ".CRT$XCAA",
+            "size": 8,
+            "start_rva": 8696
+          },
+          {
+            "name": ".CRT$XCZ",
+            "size": 8,
+            "start_rva": 8704
+          },
+          {
+            "name": ".CRT$XIA",
+            "size": 8,
+            "start_rva": 8712
+          },
+          {
+            "name": ".CRT$XIAA",
+            "size": 8,
+            "start_rva": 8720
+          },
+          {
+            "name": ".CRT$XIAC",
+            "size": 8,
+            "start_rva": 8728
+          },
+          {
+            "name": ".CRT$XIZ",
+            "size": 8,
+            "start_rva": 8736
+          },
+          {
+            "name": ".CRT$XPA",
+            "size": 8,
+            "start_rva": 8744
+          },
+          {
+            "name": ".CRT$XPZ",
+            "size": 8,
+            "start_rva": 8752
+          },
+          {
+            "name": ".CRT$XTA",
+            "size": 8,
+            "start_rva": 8760
+          },
+          {
+            "name": ".CRT$XTZ",
+            "size": 16,
+            "start_rva": 8768
+          },
+          {
+            "name": ".rdata",
+            "size": 552,
+            "start_rva": 8784
+          },
+          {
+            "name": ".rdata$zzzdbg",
+            "size": 744,
+            "start_rva": 9336
+          },
+          {
+            "name": ".rtc$IAA",
+            "size": 8,
+            "start_rva": 10080
+          },
+          {
+            "name": ".rtc$IZZ",
+            "size": 8,
+            "start_rva": 10088
+          },
+          {
+            "name": ".rtc$TAA",
+            "size": 8,
+            "start_rva": 10096
+          },
+          {
+            "name": ".rtc$TZZ",
+            "size": 8,
+            "start_rva": 10104
+          },
+          {
+            "name": ".xdata",
+            "size": 468,
+            "start_rva": 10112
+          },
+          {
+            "name": ".idata$2",
+            "size": 160,
+            "start_rva": 10580
+          },
+          {
+            "name": ".idata$3",
+            "size": 20,
+            "start_rva": 10740
+          },
+          {
+            "name": ".idata$4",
+            "size": 480,
+            "start_rva": 10760
+          },
+          {
+            "name": ".idata$6",
+            "size": 1706,
+            "start_rva": 11240
+          },
+          {
+            "name": ".data",
+            "size": 64,
+            "start_rva": 16384
+          },
+          {
+            "name": ".bss",
+            "size": 1528,
+            "start_rva": 16448
+          },
+          {
+            "name": ".pdata",
+            "size": 408,
+            "start_rva": 20480
+          },
+          {
+            "name": ".rsrc$01",
+            "size": 96,
+            "start_rva": 24576
+          },
+          {
+            "name": ".rsrc$02",
+            "size": 384,
+            "start_rva": 24672
+          }
+        ],
+        "signature": "LCTG"
+      },
+      "pointerto_rawdata": 6384,
+      "sizeof_data": 620,
+      "timestamp": 1561616129,
+      "type": "POGO"
+    },
+    {
+      "addressof_rawdata": 0,
+      "characteristics": 0,
+      "major_version": 0,
+      "minor_version": 0,
+      "pointerto_rawdata": 0,
+      "sizeof_data": 0,
+      "timestamp": 1561616129,
+      "type": "ILTCG"
+    }
+  ],
+  "dos_header": {
+    "addressof_new_exeheader": 256,
+    "addressof_relocation_table": 64,
+    "checksum": 0,
+    "file_size_in_pages": 3,
+    "header_size_in_paragraphs": 4,
+    "initial_ip": 0,
+    "initial_relative_cs": 0,
+    "initial_relative_ss": 0,
+    "initial_sp": 184,
+    "magic": 23117,
+    "maximum_extra_paragraphs": 65535,
+    "minimum_extra_paragraphs": 0,
+    "numberof_relocation": 0,
+    "oem_id": 0,
+    "oem_info": 0,
+    "overlay_number": 0,
+    "reserved": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "reserved2": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "used_bytes_in_the_last_page": 144
+  },
+  "entrypoint": 5368714564,
+  "header": {
+    "characteristics": 34,
+    "machine": "AMD64",
+    "numberof_sections": 6,
+    "numberof_symbols": 0,
+    "pointerto_symbol_table": 0,
+    "signature": [
+      80,
+      69,
+      0,
+      0
+    ],
+    "sizeof_optional_header": 240,
+    "time_date_stamp": 1561616129
+  },
+  "imports": [
+    {
+      "entries": [
+        {
+          "data": 11794,
+          "hint": 262,
+          "iat_address": 8320,
+          "name": "??6?$basic_ostream@DU?$char_traits@D@std@@@std@@QEAAAEAV01@P6AAEAV01@AEAV01@@Z@Z"
+        },
+        {
+          "data": 11728,
+          "hint": 1246,
+          "iat_address": 8328,
+          "name": "?sputc@?$basic_streambuf@DU?$char_traits@D@std@@@std@@QEAAHD@Z"
+        },
+        {
+          "data": 11660,
+          "hint": 872,
+          "iat_address": 8336,
+          "name": "?flush@?$basic_ostream@DU?$char_traits@D@std@@@std@@QEAAAEAV12@XZ"
+        },
+        {
+          "data": 11592,
+          "hint": 1121,
+          "iat_address": 8344,
+          "name": "?put@?$basic_ostream@DU?$char_traits@D@std@@@std@@QEAAAEAV12@D@Z"
+        },
+        {
+          "data": 11520,
+          "hint": 1249,
+          "iat_address": 8352,
+          "name": "?sputn@?$basic_streambuf@DU?$char_traits@D@std@@@std@@QEAA_JPEBD_J@Z"
+        },
+        {
+          "data": 11460,
+          "hint": 1332,
+          "iat_address": 8360,
+          "name": "?widen@?$basic_ios@DU?$char_traits@D@std@@@std@@QEBADD@Z"
+        },
+        {
+          "data": 11396,
+          "hint": 1221,
+          "iat_address": 8368,
+          "name": "?setstate@?$basic_ios@DU?$char_traits@D@std@@@std@@QEAAXH_N@Z"
+        },
+        {
+          "data": 11334,
+          "hint": 580,
+          "iat_address": 8376,
+          "name": "?_Osfx@?$basic_ostream@DU?$char_traits@D@std@@@std@@QEAAXXZ"
+        },
+        {
+          "data": 11300,
+          "hint": 1310,
+          "iat_address": 8384,
+          "name": "?uncaught_exception@std@@YA_NXZ"
+        },
+        {
+          "data": 11240,
+          "hint": 692,
+          "iat_address": 8392,
+          "name": "?cout@std@@3V?$basic_ostream@DU?$char_traits@D@std@@@1@A"
+        }
+      ],
+      "forwarder_chain": 0,
+      "import_address_table_rva": 8320,
+      "import_lookup_table_rva": 10888,
+      "name": "MSVCP140.dll",
+      "timedatestamp": 0
+    },
+    {
+      "entries": [
+        {
+          "data": 11956,
+          "hint": 62,
+          "iat_address": 8408,
+          "name": "memset"
+        },
+        {
+          "data": 11932,
+          "hint": 8,
+          "iat_address": 8416,
+          "name": "__C_specific_handler"
+        },
+        {
+          "data": 11914,
+          "hint": 35,
+          "iat_address": 8424,
+          "name": "__std_terminate"
+        },
+        {
+          "data": 11892,
+          "hint": 14,
+          "iat_address": 8432,
+          "name": "__CxxFrameHandler3"
+        }
+      ],
+      "forwarder_chain": 0,
+      "import_address_table_rva": 8408,
+      "import_lookup_table_rva": 10976,
+      "name": "VCRUNTIME140.dll",
+      "timedatestamp": 0
+    },
+    {
+      "entries": [
+        {
+          "data": 12392,
+          "hint": 30,
+          "iat_address": 8496,
+          "name": "_crt_atexit"
+        },
+        {
+          "data": 12406,
+          "hint": 103,
+          "iat_address": 8504,
+          "name": "terminate"
+        },
+        {
+          "data": 12336,
+          "hint": 52,
+          "iat_address": 8512,
+          "name": "_initialize_onexit_table"
+        },
+        {
+          "data": 12236,
+          "hint": 61,
+          "iat_address": 8520,
+          "name": "_register_thread_local_exe_atexit_callback"
+        },
+        {
+          "data": 12226,
+          "hint": 21,
+          "iat_address": 8528,
+          "name": "_c_exit"
+        },
+        {
+          "data": 12158,
+          "hint": 85,
+          "iat_address": 8536,
+          "name": "exit"
+        },
+        {
+          "data": 12144,
+          "hint": 55,
+          "iat_address": 8544,
+          "name": "_initterm_e"
+        },
+        {
+          "data": 12132,
+          "hint": 54,
+          "iat_address": 8552,
+          "name": "_initterm"
+        },
+        {
+          "data": 12098,
+          "hint": 40,
+          "iat_address": 8560,
+          "name": "_get_initial_narrow_environment"
+        },
+        {
+          "data": 12064,
+          "hint": 51,
+          "iat_address": 8568,
+          "name": "_initialize_narrow_environment"
+        },
+        {
+          "data": 12038,
+          "hint": 24,
+          "iat_address": 8576,
+          "name": "_configure_narrow_argv"
+        },
+        {
+          "data": 12188,
+          "hint": 4,
+          "iat_address": 8584,
+          "name": "__p___argc"
+        },
+        {
+          "data": 12002,
+          "hint": 66,
+          "iat_address": 8592,
+          "name": "_set_app_type"
+        },
+        {
+          "data": 11984,
+          "hint": 64,
+          "iat_address": 8600,
+          "name": "_seh_filter_exe"
+        },
+        {
+          "data": 12216,
+          "hint": 22,
+          "iat_address": 8608,
+          "name": "_cexit"
+        },
+        {
+          "data": 12202,
+          "hint": 5,
+          "iat_address": 8616,
+          "name": "__p___argv"
+        },
+        {
+          "data": 12166,
+          "hint": 35,
+          "iat_address": 8624,
+          "name": "_exit"
+        },
+        {
+          "data": 12364,
+          "hint": 60,
+          "iat_address": 8632,
+          "name": "_register_onexit_function"
+        }
+      ],
+      "forwarder_chain": 0,
+      "import_address_table_rva": 8496,
+      "import_lookup_table_rva": 11064,
+      "name": "api-ms-win-crt-runtime-l1-1-0.dll",
+      "timedatestamp": 0
+    },
+    {
+      "entries": [
+        {
+          "data": 12018,
+          "hint": 9,
+          "iat_address": 8480,
+          "name": "__setusermatherr"
+        }
+      ],
+      "forwarder_chain": 0,
+      "import_address_table_rva": 8480,
+      "import_lookup_table_rva": 11048,
+      "name": "api-ms-win-crt-math-l1-1-0.dll",
+      "timedatestamp": 0
+    },
+    {
+      "entries": [
+        {
+          "data": 12320,
+          "hint": 1,
+          "iat_address": 8648,
+          "name": "__p__commode"
+        },
+        {
+          "data": 12174,
+          "hint": 84,
+          "iat_address": 8656,
+          "name": "_set_fmode"
+        }
+      ],
+      "forwarder_chain": 0,
+      "import_address_table_rva": 8648,
+      "import_lookup_table_rva": 11216,
+      "name": "api-ms-win-crt-stdio-l1-1-0.dll",
+      "timedatestamp": 0
+    },
+    {
+      "entries": [
+        {
+          "data": 12282,
+          "hint": 8,
+          "iat_address": 8464,
+          "name": "_configthreadlocale"
+        }
+      ],
+      "forwarder_chain": 0,
+      "import_address_table_rva": 8464,
+      "import_lookup_table_rva": 11032,
+      "name": "api-ms-win-crt-locale-l1-1-0.dll",
+      "timedatestamp": 0
+    },
+    {
+      "entries": [
+        {
+          "data": 12304,
+          "hint": 22,
+          "iat_address": 8448,
+          "name": "_set_new_mode"
+        }
+      ],
+      "forwarder_chain": 0,
+      "import_address_table_rva": 8448,
+      "import_lookup_table_rva": 11016,
+      "name": "api-ms-win-crt-heap-l1-1-0.dll",
+      "timedatestamp": 0
+    },
+    {
+      "entries": [
+        {
+          "data": 12582,
+          "hint": 1235,
+          "iat_address": 8192,
+          "name": "RtlCaptureContext"
+        },
+        {
+          "data": 12602,
+          "hint": 1242,
+          "iat_address": 8200,
+          "name": "RtlLookupFunctionEntry"
+        },
+        {
+          "data": 12628,
+          "hint": 1249,
+          "iat_address": 8208,
+          "name": "RtlVirtualUnwind"
+        },
+        {
+          "data": 12648,
+          "hint": 1468,
+          "iat_address": 8216,
+          "name": "UnhandledExceptionFilter"
+        },
+        {
+          "data": 12676,
+          "hint": 1403,
+          "iat_address": 8224,
+          "name": "SetUnhandledExceptionFilter"
+        },
+        {
+          "data": 12706,
+          "hint": 541,
+          "iat_address": 8232,
+          "name": "GetCurrentProcess"
+        },
+        {
+          "data": 12726,
+          "hint": 1434,
+          "iat_address": 8240,
+          "name": "TerminateProcess"
+        },
+        {
+          "data": 12746,
+          "hint": 905,
+          "iat_address": 8248,
+          "name": "IsProcessorFeaturePresent"
+        },
+        {
+          "data": 12774,
+          "hint": 1104,
+          "iat_address": 8256,
+          "name": "QueryPerformanceCounter"
+        },
+        {
+          "data": 12800,
+          "hint": 542,
+          "iat_address": 8264,
+          "name": "GetCurrentProcessId"
+        },
+        {
+          "data": 12822,
+          "hint": 546,
+          "iat_address": 8272,
+          "name": "GetCurrentThreadId"
+        },
+        {
+          "data": 12844,
+          "hint": 752,
+          "iat_address": 8280,
+          "name": "GetSystemTimeAsFileTime"
+        },
+        {
+          "data": 12870,
+          "hint": 876,
+          "iat_address": 8288,
+          "name": "InitializeSListHead"
+        },
+        {
+          "data": 12892,
+          "hint": 898,
+          "iat_address": 8296,
+          "name": "IsDebuggerPresent"
+        },
+        {
+          "data": 12912,
+          "hint": 638,
+          "iat_address": 8304,
+          "name": "GetModuleHandleW"
+        }
+      ],
+      "forwarder_chain": 0,
+      "import_address_table_rva": 8192,
+      "import_lookup_table_rva": 10760,
+      "name": "KERNEL32.dll",
+      "timedatestamp": 0
+    }
+  ],
+  "load_configuration": {
+    "addressof_unicode_string": 0,
+    "characteristics": 264,
+    "code_integrity": {
+      "catalog": 0,
+      "catalog_offset": 0,
+      "flags": 0,
+      "reserved": 0
+    },
+    "critical_section_default_timeout": 0,
+    "csd_version": 0,
+    "decommit_free_block_threshold": 0,
+    "decommit_total_free_threshold": 0,
+    "dynamic_value_reloc_table": 0,
+    "dynamic_value_reloctable_offset": 0,
+    "dynamic_value_reloctable_section": 0,
+    "editlist": 0,
+    "global_flags_clear": 0,
+    "global_flags_set": 0,
+    "guard_address_taken_iat_entry_count": 0,
+    "guard_address_taken_iat_entry_table": 0,
+    "guard_cf_check_function_pointer": 5368717792,
+    "guard_cf_dispatch_function_pointer": 5368717800,
+    "guard_cf_function_count": 0,
+    "guard_cf_function_table": 0,
+    "guard_flags": 256,
+    "guard_long_jump_target_count": 0,
+    "guard_long_jump_target_table": 0,
+    "guard_rf_failure_routine": 0,
+    "guard_rf_failure_routine_function_pointer": 0,
+    "guard_rf_verify_stackpointer_function_pointer": 0,
+    "hotpatch_table_offset": 0,
+    "hybrid_metadata_pointer": 0,
+    "lock_prefix_table": 0,
+    "major_version": 0,
+    "maximum_allocation_size": 0,
+    "minor_version": 0,
+    "process_affinity_mask": 0,
+    "process_heap_flags": 0,
+    "reserved1": 0,
+    "reserved2": 0,
+    "reserved3": 0,
+    "se_handler_count": 0,
+    "se_handler_table": 0,
+    "security_cookie": 1073758216,
+    "timedatestamp": 0,
+    "version": "WIN10_0_16237",
+    "virtual_memory_threshold": 0
+  },
+  "name": "testbin/test.exe",
+  "optional_header": {
+    "addressof_entrypoint": 5444,
+    "baseof_code": 4096,
+    "checksum": 0,
+    "dll_characteristics": 33120,
+    "file_alignment": 512,
+    "imagebase": 5368709120,
+    "loader_flags": 0,
+    "magic": "PE32_PLUS",
+    "major_image_version": 0,
+    "major_linker_version": 14,
+    "major_operating_system_version": 6,
+    "major_subsystem_version": 6,
+    "minor_image_version": 0,
+    "minor_linker_version": 21,
+    "minor_operating_system_version": 0,
+    "minor_subsystem_version": 0,
+    "numberof_rva_and_size": 16,
+    "section_alignment": 4096,
+    "sizeof_code": 4096,
+    "sizeof_headers": 1024,
+    "sizeof_heap_commit": 4096,
+    "sizeof_heap_reserve": 1048576,
+    "sizeof_image": 32768,
+    "sizeof_initialized_data": 8704,
+    "sizeof_stack_commit": 4096,
+    "sizeof_stack_reserve": 1048576,
+    "sizeof_uninitialized_data": 0,
+    "subsystem": "WINDOWS_CUI",
+    "win32_version_value": 0
+  },
+  "relocations": [
+    {
+      "block_size": 28,
+      "entries": [
+        {
+          "data": 41440,
+          "position": 480,
+          "type": "DIR64"
+        },
+        {
+          "data": 41448,
+          "position": 488,
+          "type": "DIR64"
+        },
+        {
+          "data": 41464,
+          "position": 504,
+          "type": "DIR64"
+        },
+        {
+          "data": 41488,
+          "position": 528,
+          "type": "DIR64"
+        },
+        {
+          "data": 41496,
+          "position": 536,
+          "type": "DIR64"
+        },
+        {
+          "data": 41552,
+          "position": 592,
+          "type": "DIR64"
+        },
+        {
+          "data": 41560,
+          "position": 600,
+          "type": "DIR64"
+        },
+        {
+          "data": 41928,
+          "position": 968,
+          "type": "DIR64"
+        },
+        {
+          "data": 41952,
+          "position": 992,
+          "type": "DIR64"
+        },
+        {
+          "data": 41960,
+          "position": 1000,
+          "type": "DIR64"
+        }
+      ],
+      "virtual_address": 8192
+    }
+  ],
+  "resources_manager": {
+    "manifest": "<?xml version='1.0' encoding='UTF-8' standalone='yes'?>\\x0d\\x0a<assembly xmlns='urn:schemas-microsoft-com:asm.v1' manifestVersion='1.0'>\\x0d\\x0a  <trustInfo xmlns=\"urn:schemas-microsoft-com:asm.v3\">\\x0d\\x0a    <security>\\x0d\\x0a      <requestedPrivileges>\\x0d\\x0a        <requestedExecutionLevel level='asInvoker' uiAccess='false' />\\x0d\\x0a      </requestedPrivileges>\\x0d\\x0a    </security>\\x0d\\x0a  </trustInfo>\\x0d\\x0a</assembly>\\x0d\\x0a"
+  },
+  "resources_tree": {
+    "characteristics": 0,
+    "childs": [
+      {
+        "characteristics": 0,
+        "childs": [
+          {
+            "characteristics": 0,
+            "childs": [
+              {
+                "code_page": 0,
+                "hash": 564386015,
+                "offset": 11360,
+                "reserved": 0
+              }
+            ],
+            "id": 1,
+            "major_version": 0,
+            "minor_version": 0,
+            "numberof_id_entries": 1,
+            "numberof_name_entries": 0,
+            "time_date_stamp": 0
+          }
+        ],
+        "id": 24,
+        "major_version": 0,
+        "minor_version": 0,
+        "numberof_id_entries": 1,
+        "numberof_name_entries": 0,
+        "time_date_stamp": 0
+      }
+    ],
+    "id": 0,
+    "major_version": 0,
+    "minor_version": 0,
+    "numberof_id_entries": 1,
+    "numberof_name_entries": 0,
+    "time_date_stamp": 0
+  },
+  "rich_header": {
+    "entries": [
+      {
+        "build_id": 27702,
+        "count": 1,
+        "id": 258
+      },
+      {
+        "build_id": 27702,
+        "count": 1,
+        "id": 255
+      },
+      {
+        "build_id": 27702,
+        "count": 1,
+        "id": 265
+      },
+      {
+        "build_id": 0,
+        "count": 65,
+        "id": 1
+      },
+      {
+        "build_id": 26213,
+        "count": 2,
+        "id": 257
+      },
+      {
+        "build_id": 27521,
+        "count": 5,
+        "id": 257
+      },
+      {
+        "build_id": 27521,
+        "count": 2,
+        "id": 259
+      },
+      {
+        "build_id": 27521,
+        "count": 10,
+        "id": 260
+      },
+      {
+        "build_id": 27521,
+        "count": 17,
+        "id": 261
+      },
+      {
+        "build_id": 30729,
+        "count": 10,
+        "id": 147
+      }
+    ],
+    "key": 3979910957
+  },
+  "sections": [
+    {
+      "characteristics": [
+        "CNT_CODE",
+        "MEM_EXECUTE",
+        "MEM_READ"
+      ],
+      "entropy": 6.037463609953141,
+      "name": ".text",
+      "numberof_line_numbers": 0,
+      "numberof_relocations": 0,
+      "pointerto_line_numbers": 0,
+      "pointerto_relocation": 0,
+      "types": [
+        "UNKNOWN"
+      ]
+    },
+    {
+      "characteristics": [
+        "CNT_INITIALIZED_DATA",
+        "MEM_READ"
+      ],
+      "entropy": 4.518213576161601,
+      "name": ".rdata",
+      "numberof_line_numbers": 0,
+      "numberof_relocations": 0,
+      "pointerto_line_numbers": 0,
+      "pointerto_relocation": 0,
+      "types": [
+        "IDATA",
+        "DEBUG",
+        "Out of range",
+        "UNKNOWN"
+      ]
+    },
+    {
+      "characteristics": [
+        "CNT_INITIALIZED_DATA",
+        "MEM_READ",
+        "MEM_WRITE"
+      ],
+      "entropy": 0.4646630272644706,
+      "name": ".data",
+      "numberof_line_numbers": 0,
+      "numberof_relocations": 0,
+      "pointerto_line_numbers": 0,
+      "pointerto_relocation": 0,
+      "types": [
+        "UNKNOWN"
+      ]
+    },
+    {
+      "characteristics": [
+        "CNT_INITIALIZED_DATA",
+        "MEM_READ"
+      ],
+      "entropy": 3.706240354563436,
+      "name": ".pdata",
+      "numberof_line_numbers": 0,
+      "numberof_relocations": 0,
+      "pointerto_line_numbers": 0,
+      "pointerto_relocation": 0,
+      "types": [
+        "UNKNOWN"
+      ]
+    },
+    {
+      "characteristics": [
+        "CNT_INITIALIZED_DATA",
+        "MEM_READ"
+      ],
+      "entropy": 4.855375494112111,
+      "name": ".rsrc",
+      "numberof_line_numbers": 0,
+      "numberof_relocations": 0,
+      "pointerto_line_numbers": 0,
+      "pointerto_relocation": 0,
+      "types": [
+        "RESOURCE",
+        "UNKNOWN"
+      ]
+    },
+    {
+      "characteristics": [
+        "CNT_INITIALIZED_DATA",
+        "MEM_DISCARDABLE",
+        "MEM_READ"
+      ],
+      "entropy": 3.4852281360342507,
+      "name": ".reloc",
+      "numberof_line_numbers": 0,
+      "numberof_relocations": 0,
+      "pointerto_line_numbers": 0,
+      "pointerto_relocation": 0,
+      "types": [
+        "RELOCATION",
+        "UNKNOWN"
+      ]
+    }
+  ],
+  "virtual_size": 32768
+}
