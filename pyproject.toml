@@ -15,7 +15,7 @@ python = "^3.8,<3.11"
 pehash = {git = "https://github.com/knowmalware/pehash.git", develop = true, rev = "v0.9.1"}
 ssdeep = "^3.4"
 pefile = "^2021.9.3"
-lief = "^0.12.0"
+lief = "^0.12.1"
 typer = "^0.4.1"
 loguru = "^0.6.0"
 pandas = "^1.4.1"
