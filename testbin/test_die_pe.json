@@ -1,24 +1,24 @@
 {
-  "detects": [
-    {
-      "filetype": "PE64",
-      "parentfilepart": "Header",
-      "values": [
+    "detects": [
         {
-          "info": "-",
-          "name": "Microsoft Visual C++",
-          "string": "Compiler: Microsoft Visual C++(-)[-]",
-          "type": "Compiler",
-          "version": "-"
-        },
-        {
-          "info": "Console64,console",
-          "name": "Microsoft Linker",
-          "string": "Linker: Microsoft Linker(14.21**)[Console64,console]",
-          "type": "Linker",
-          "version": "14.21**"
+            "filetype": "PE64",
+            "parentfilepart": "Header",
+            "values": [
+                {
+                    "info": "-",
+                    "name": "Microsoft Visual C++",
+                    "string": "Compiler: Microsoft Visual C++(2019 v.16.1)[-]",
+                    "type": "Compiler",
+                    "version": "2019 v.16.1"
+                },
+                {
+                    "info": "Console64,console",
+                    "name": "Microsoft Linker",
+                    "string": "Linker: Microsoft Linker(14.21, Visual Studio 2019 16.1*)[Console64,console]",
+                    "type": "Linker",
+                    "version": "14.21, Visual Studio 2019 16.1*"
+                }
+            ]
         }
-      ]
-    }
-  ]
+    ]
 }

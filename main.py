@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 #
-# (c) FFRI Security, Inc., 2019-2022 / Author: FFRI Security, Inc.
+# (c) FFRI Security, Inc., 2019-2023 / Author: FFRI Security, Inc.
 #
 import errno
 import hashlib
@@ -259,7 +259,7 @@ def compute_trid(path: str):
 
 def compute_die(path: str):
     raw_output = subprocess.run(
-        ["/bin/sh", "./die_linux_portable/diec.sh", "-j", os.path.basename(path)],
+        ["diec", "-j", os.path.basename(path)],
         stdout=subprocess.PIPE,
         check=True,
     ).stdout.decode("utf-8")
@@ -275,6 +275,7 @@ def compute_manalyze_impl(path: str, pe):
     raw_output = subprocess.run(
         # NOTE: The information obtained by "--dump=dos" is finally ignored.
         # NOTE: The reason why we specify this flag is to avoid the bug of parsing resources in Manalyze.
+        # NOTE: If Manalyze failed to parse the file, None will be returned.
         [
             "./Manalyze/bin/manalyze",
             "--dump=dos",
@@ -287,6 +288,8 @@ def compute_manalyze_impl(path: str, pe):
         errors="ignore",
     ).stdout
     json_output = json.loads(raw_output)
+    if json_output == {}:
+        return None
     result = list(json_output.values())[0]
     if "packer" in result["Plugins"].keys():
         packer_info = result["Plugins"]["packer"]

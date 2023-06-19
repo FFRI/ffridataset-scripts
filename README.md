@@ -1,6 +1,6 @@
 # FFRI Dataset scripts
 
-You can make datasets in the form of the FFRI dataset using this script.
+This script enables you to create datasets in the same format as the FFRI dataset.
 
 ## Requirements
 
@@ -9,8 +9,8 @@ We recommend that you use Docker for making datasets. See [Using Docker](#Using-
 Alternatively, you can use this script by installing the following dependencies on [tested platforms](#Tested).
 See [Run this script natively](#Run-This-Script-Natively) for more details.
 
-- Python 3.9
-- [Poetry](https://python-poetry.org/)
+- Python 3.11
+- [Poetry](https://python-poetry.org/) 1.2+
 
 ## Using Docker
 
@@ -41,21 +41,12 @@ Please make sure that:
 
 - The host directory that contains both a csv file and executable files is mounted to the container's `/work/data`.
 - The host directory in which you want to output JSON files is mounted to the container's `/work/out_dir`.
-- `<version_string>` should be vYYYY (e.g., `<version_string>` is v2022 for FFRI Dataset 2022).
+- `<version_string>` should be vYYYY (e.g., `<version_string>` is v2023 for FFRI Dataset 2023).
 
 To enable non-PE files to be processed, use `--not-pe-only` flag.
 
 ```
 docker run -v <path/to/here>/data:/work/data -v <path/to/here>/out_dir:/work/out_dir ffridataset-scripts main.py --csv ./data/target.csv --out ./out_dir --log ./dataset.log --ver <version_string> --not-pe-only
-```
-
-If you want to use the script that produced the FFRI Dataset 2022, build `dataset` image as follows.
-
-```
-docker build --target dataset --tag ffridataset-scripts .
-docker run -v <path/to/here>/testbin:/work/testbin ffridataset-scripts test_main.py
-# Note that data directory contains a CSV file and executable files which you want to process.
-docker run -v <path/to/here>/data:/work/data -v <path/to/here>/out_dir:/work/out_dir ffridataset-scripts main.py --csv ./data/target.csv --out ./out_dir --log ./dataset.log --ver <version_string>
 ```
 
 ## Run This Script Natively
@@ -67,23 +58,29 @@ docker run -v <path/to/here>/data:/work/data -v <path/to/here>/out_dir:/work/out
 ```
 sudo apt update
 
-sudo apt install --no-install-recommends wget git gcc g++ make autoconf libfuzzy-dev unar cmake mlocate python3.9 python3-pip python3.9-dev libssl-dev python3-setuptools libglib2.0-0 curl libboost-regex-dev libboost-program-options-dev libboost-system-dev libboost-filesystem-dev build-essential libpcre2-dev libdouble-conversion-dev
+sudo apt install --no-install-recommends wget git gcc g++ make autoconf libfuzzy-dev unar cmake mlocate python3.11 python3-pip python3.11-dev libssl-dev python3-setuptools libglib2.0-0 curl libboost-regex-dev libboost-program-options-dev libboost-system-dev libboost-filesystem-dev build-essential libpcre2-dev libdouble-conversion-dev
 
-poetry shell
+sudo apt install -y --no-install-recommends libqt5core5a libqt5svg5 libqt5gui5 libqt5widgets5 libqt5opengl5 libqt5dbus5 libqt5scripttools5 libqt5script5 libqt5network5 libqt5sql5
+
+cd workspace
+git clone https://github.com/JPCERTCC/impfuzzy.git
+cd impfuzzy
+git checkout b30548d005c9d980b3e3630648b39830597293fc
+cd ../..
 poetry install --no-dev
 
 wget mark0.net/download/trid_linux_64.zip
 unar trid_linux_64.zip
 cp trid_linux_64/trid ./
 chmod u+x trid
-cp triddefs_dir/triddefs-dataset2022.trd triddefs.trd
+cp triddefs_dir/triddefs-dataset2023.trd triddefs.trd
 
-cp die/die_3.05_portable_Ubuntu_20.04_amd64.tar.gz ./
-tar xzf die_3.05_portable_Ubuntu_20.04_amd64.tar.gz
+wget https://github.com/horsicq/DIE-engine/releases/download/3.07/die_3.07_Ubuntu_22.04_amd64.deb
+sudo apt install ./die_3.07_Ubuntu_22.04_amd64.deb
 
 git clone https://github.com/JusticeRage/Manalyze.git
 cd Manalyze
-git checkout 639735735ef9a3753def23d2baee0d1e55a7c828
+git checkout e951f343e092350d8380149faea3aa543cf5fae8
 cmake .
 make
 cd ../
@@ -96,7 +93,7 @@ If something is wrong, see Dockerfile.
 **Attention** Do not store a file named test.exe in the working directory. The test script copies testbin/test.exe in the directory and removes it.
 
 ```
-python test_main.py
+poetry run python test_main.py
 ```
 
 ### Make Datasets
@@ -106,7 +103,7 @@ Before running this script, you need to make a CSV file described in [Make A CSV
 **Attention** Do not store malware and cleanware in the working directory. This script copies malware and cleanware in the directory and removes them.
 
 ```
-python main.py --csv <path/to/csv> --out <path/to/output_dataset_dir> --log <path/to/log_file> --ver <version_string>
+poetry run python main.py --csv <path/to/csv> --out <path/to/output_dataset_dir> --log <path/to/log_file> --ver <version_string>
 ```
 
 ## Notes About Hashes
@@ -119,15 +116,10 @@ python main.py --csv <path/to/csv> --out <path/to/output_dataset_dir> --log <pat
 - TrID definition files included in [triddefs_dir](triddefs_dir) are redistributed with the permission from the TrID author, Marco Pontello.
 - The latest definition file can be obtained from the [TrID website](https://mark0.net/soft-trid-e.html).
 
-## Notes About DIE
-
-- We use the modified version of DIE that we fixed [an issue](https://github.com/horsicq/Detect-It-Easy/issues/117), which we provide in the `die` directory.
-- See the original DIE License file in the `third-party-licenses` directory.
-
 ## Tested
 
-- Ubuntu 20.04.2 LTS
-- Ubuntu 20.04 on WSL2 on Windows 10 Pro 2004
+- Ubuntu 22.04.2 LTS
+- Ubuntu 22.04 on WSL2 on Windows 10
 
 ## Development
 
@@ -155,7 +147,7 @@ docker run -v <path/to/here>\testbin:/work/testbin -v <path/to/here>\measurement
 Now you're ready to do profiling. To generate a cProfile result file, run
 
 ```
-docker run -v <path/to/here>\measurement:/work/data -v <path/to/here>\out_dir:/work/out_dir ffridataset-scripts poetry run python -m cProfile -o ./out_dir/profiling.stats main.py --csv ./data/test.csv --out ./out_dir --log ./test.log --ver v2022
+docker run -v <path/to/here>\measurement:/work/data -v <path/to/here>\out_dir:/work/out_dir ffridataset-scripts poetry run python -m cProfile -o ./out_dir/profiling.stats main.py --csv ./data/test.csv --out ./out_dir --log ./test.log --ver v2023
 ```
 
 Then type
@@ -168,6 +160,6 @@ and you can see the profiling result through your browser.
 
 ## Author
 
-Yuki Mogi. &copy; FFRI, Inc. 2019-2022
+Yuki Mogi. &copy; FFRI, Inc. 2019-2023
 
-Koh M. Nakagawa. &copy; FFRI, Inc. 2019-2022
+Koh M. Nakagawa. &copy; FFRI, Inc. 2019-2023

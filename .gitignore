@@ -24,3 +24,7 @@ measurement/
 out_dir/
 Manalyze/
 *.stats
+.tool-versions
+workspace/impfuzzy/
+die/
+mal/

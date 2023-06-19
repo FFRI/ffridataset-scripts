@@ -1,5 +1,5 @@
 #
-# (c) FFRI Security, Inc., 2021 / Author: FFRI Security, Inc.
+# (c) FFRI Security, Inc., 2021-2023 / Author: FFRI Security, Inc.
 #
 import subprocess
 import json
@@ -20,7 +20,7 @@ def dump_json(obj: dict, path: str):
 
 def create_die_pe(path: str):
     raw_output = subprocess.run(
-        ["/bin/sh", "./die_linux_portable/diec.sh", "-j", path],
+        ["/bin/sh", "diec.sh", "-j", path],
         stdout=subprocess.PIPE,
         check=True,
     ).stdout.decode("utf-8")

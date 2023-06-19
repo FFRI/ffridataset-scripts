@@ -1,0 +1,35 @@
+[tool.poetry]
+name = "ffridataset-scripts"
+version = "v2023.1"
+description = "This script makes datasets in the form of the FFRI dataset in Docker container"
+authors = ["Yuki Mogi", "Koh M. Nakagawa"]
+license = "Apache-2"
+readme = "README.md"
+homepage = "https://github.com/FFRI/ffridataset-scripts"
+repository = "https://github.com/FFRI/ffridataset-scripts"
+include = ["LICENSE"]
+keywords = ["Malware", "FFRI Dataset", "Machine Learning", "MWS/CSS"]
+packages = [{include = "ffridataset_scripts"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+ssdeep = "^3.4"
+lief = "^0.12.3"
+typer = "^0.7.0"
+pandas = "^1.5.3"
+joblib = "^1.2.0"
+py-tlsh = "^4.7.2"
+pyimpfuzzy = {path = "workspace/impfuzzy/pyimpfuzzy"}
+pefile = {git = "https://github.com/erocarrera/pefile.git", develop = true, rev = "593d094"}
+loguru = "^0.6.0"
+pehash = {git = "https://github.com/knowmalware/pehash.git", develop = true, rev = "v0.9.1"}
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.3.0"
+isort = "^5.12.0"
+snakeviz = "^2.1.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
