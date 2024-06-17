@@ -1,5 +1,5 @@
 #
-# (c) FFRI Security, Inc., 2021-2023 / Author: FFRI Security, Inc.
+# (c) FFRI Security, Inc., 2021-2024 / Author: FFRI Security, Inc.
 #
 import subprocess
 import json
@@ -20,7 +20,7 @@ def dump_json(obj: dict, path: str):
 
 def create_die_pe(path: str):
     raw_output = subprocess.run(
-        ["/bin/sh", "diec.sh", "-j", path],
+        ["diec", "-j", path],
         stdout=subprocess.PIPE,
         check=True,
     ).stdout.decode("utf-8")
@@ -62,7 +62,7 @@ def create_manalyze_pe(_: str):
         # NOTE: The information obtained by "--dump=dos" is finally ignored.
         # NOTE: The reason why we specify this flag is to avoid the bug of parsing resources in Manalyze.
         [
-            "./Manalyze/bin/manalyze",
+            "./workspace/Manalyze/bin/manalyze",
             "--dump=dos",
             "--output=json",
             "--plugins=packer",

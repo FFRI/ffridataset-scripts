@@ -1,5 +1,5 @@
 #
-# (c) FFRI Security, Inc., 2021-2023 / Author: FFRI Security, Inc.
+# (c) FFRI Security, Inc., 2021-2024 / Author: FFRI Security, Inc.
 #
 
 import csv

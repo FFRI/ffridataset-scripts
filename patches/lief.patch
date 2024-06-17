@@ -1,0 +1,15 @@
+diff --git a/src/BinaryStream/ASN1Reader.cpp b/src/BinaryStream/ASN1Reader.cpp
+index f9973f1a..63551c4b 100644
+--- a/src/BinaryStream/ASN1Reader.cpp
++++ b/src/BinaryStream/ASN1Reader.cpp
+@@ -473,6 +473,10 @@ std::string ASN1Reader::tag2str(int tag) {
+   HANDLE(ASN1_CONSTRUCTED);
+   HANDLE(ASN1_CONTEXT_SPECIFIC);
+ 
++  if (tag_str.size() < 3) {
++    return "MBEDTLS_ASN1_UNKNOWN";
++  }
++
+   return tag_str.substr(3);
+ #undef HANDLE
+ }

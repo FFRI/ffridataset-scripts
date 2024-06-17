@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ffridataset-scripts"
-version = "v2023.1"
+version = "v2024.1"
 description = "This script makes datasets in the form of the FFRI dataset"
 authors = ["Yuki Mogi", "Koh M. Nakagawa"]
 license = "Apache-2"
@@ -12,24 +12,24 @@ keywords = ["Malware", "FFRI Dataset", "Machine Learning", "MWS/CSS"]
 packages = [{include = "ffridataset_scripts"}]
 
 [tool.poetry.dependencies]
-python = "^3.11"
-ssdeep = "^3.4"
-lief = "^0.12.3"
-typer = "^0.7.0"
-pandas = "^1.5.3"
-joblib = "^1.2.0"
-py-tlsh = "^4.7.2"
-pyimpfuzzy = {path = "workspace/impfuzzy/pyimpfuzzy"}
-pefile = {git = "https://github.com/erocarrera/pefile.git", develop = true, rev = "593d094"}
-pypeid = {path = "workspace/pypeid-0.1.2-py3-none-any.whl"}
-loguru = "^0.6.0"
+python = "^3.12"
+pefile = {path = "workspace/pefile"}
+yara-python = "^4.5.0"
 pehash = {git = "https://github.com/knowmalware/pehash.git", develop = true, rev = "v0.9.1"}
-
+pypeid = {path = "workspace/pypeid-0.1.3-py3-none-any.whl"}
+pyimpfuzzy = {path = "workspace/impfuzzy/pyimpfuzzy"}
+tlsh = {path = "workspace/tlsh/py_ext"}
+ssdeep = "^3.4"
+lief = {path="workspace/LIEF/api/python"}
+typer = "^0.12.3"
+pandas = "^2.2.1"
+joblib = "^1.4.0"
+loguru = "^0.7.2"
 
 [tool.poetry.group.dev.dependencies]
-black = "^23.3.0"
-isort = "^5.12.0"
-snakeviz = "^2.1.1"
+black = "^24.3.0"
+isort = "^5.13.2"
+snakeviz = "^2.2.0"
 
 [build-system]
 requires = ["poetry-core"]

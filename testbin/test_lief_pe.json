@@ -92,29 +92,6 @@
     {
       "addressof_rawdata": 9336,
       "characteristics": 0,
-      "code_view": {
-        "age": 1,
-        "cv_signature": "PDB_70",
-        "filename": "C:\\Users\\yuki.mogi\\source\\repos\\FFRIProject1\\x64\\Release\\FFRIProject1.pdb",
-        "signature": [
-          242,
-          42,
-          179,
-          101,
-          84,
-          64,
-          143,
-          79,
-          135,
-          230,
-          214,
-          236,
-          103,
-          246,
-          201,
-          234
-        ]
-      },
       "major_version": 0,
       "minor_version": 0,
       "pointerto_rawdata": 6264,
@@ -137,171 +114,6 @@
       "characteristics": 0,
       "major_version": 0,
       "minor_version": 0,
-      "pogo": {
-        "entries": [
-          {
-            "name": ".text$mn",
-            "size": 3824,
-            "start_rva": 4096
-          },
-          {
-            "name": ".text$mn$00",
-            "size": 32,
-            "start_rva": 7920
-          },
-          {
-            "name": ".text$x",
-            "size": 134,
-            "start_rva": 7952
-          },
-          {
-            "name": ".idata$5",
-            "size": 480,
-            "start_rva": 8192
-          },
-          {
-            "name": ".00cfg",
-            "size": 16,
-            "start_rva": 8672
-          },
-          {
-            "name": ".CRT$XCA",
-            "size": 8,
-            "start_rva": 8688
-          },
-          {
-            "name": ".CRT$XCAA",
-            "size": 8,
-            "start_rva": 8696
-          },
-          {
-            "name": ".CRT$XCZ",
-            "size": 8,
-            "start_rva": 8704
-          },
-          {
-            "name": ".CRT$XIA",
-            "size": 8,
-            "start_rva": 8712
-          },
-          {
-            "name": ".CRT$XIAA",
-            "size": 8,
-            "start_rva": 8720
-          },
-          {
-            "name": ".CRT$XIAC",
-            "size": 8,
-            "start_rva": 8728
-          },
-          {
-            "name": ".CRT$XIZ",
-            "size": 8,
-            "start_rva": 8736
-          },
-          {
-            "name": ".CRT$XPA",
-            "size": 8,
-            "start_rva": 8744
-          },
-          {
-            "name": ".CRT$XPZ",
-            "size": 8,
-            "start_rva": 8752
-          },
-          {
-            "name": ".CRT$XTA",
-            "size": 8,
-            "start_rva": 8760
-          },
-          {
-            "name": ".CRT$XTZ",
-            "size": 16,
-            "start_rva": 8768
-          },
-          {
-            "name": ".rdata",
-            "size": 552,
-            "start_rva": 8784
-          },
-          {
-            "name": ".rdata$zzzdbg",
-            "size": 744,
-            "start_rva": 9336
-          },
-          {
-            "name": ".rtc$IAA",
-            "size": 8,
-            "start_rva": 10080
-          },
-          {
-            "name": ".rtc$IZZ",
-            "size": 8,
-            "start_rva": 10088
-          },
-          {
-            "name": ".rtc$TAA",
-            "size": 8,
-            "start_rva": 10096
-          },
-          {
-            "name": ".rtc$TZZ",
-            "size": 8,
-            "start_rva": 10104
-          },
-          {
-            "name": ".xdata",
-            "size": 468,
-            "start_rva": 10112
-          },
-          {
-            "name": ".idata$2",
-            "size": 160,
-            "start_rva": 10580
-          },
-          {
-            "name": ".idata$3",
-            "size": 20,
-            "start_rva": 10740
-          },
-          {
-            "name": ".idata$4",
-            "size": 480,
-            "start_rva": 10760
-          },
-          {
-            "name": ".idata$6",
-            "size": 1706,
-            "start_rva": 11240
-          },
-          {
-            "name": ".data",
-            "size": 64,
-            "start_rva": 16384
-          },
-          {
-            "name": ".bss",
-            "size": 1528,
-            "start_rva": 16448
-          },
-          {
-            "name": ".pdata",
-            "size": 408,
-            "start_rva": 20480
-          },
-          {
-            "name": ".rsrc$01",
-            "size": 96,
-            "start_rva": 24576
-          },
-          {
-            "name": ".rsrc$02",
-            "size": 384,
-            "start_rva": 24672
-          }
-        ],
-        "signature": "LCTG"
-      },
       "pointerto_rawdata": 6384,
       "sizeof_data": 620,
       "timestamp": 1561616129,
@@ -353,7 +165,7 @@
       0,
       0
     ],
-    "used_bytes_in_the_last_page": 144
+    "used_bytes_in_last_page": 144
   },
   "entrypoint": 5368714564,
   "header": {
@@ -803,10 +615,10 @@
     "se_handler_table": 0,
     "security_cookie": 1073758216,
     "timedatestamp": 0,
-    "version": "WIN10_0_16237",
-    "virtual_memory_threshold": 0
+    "version": "WIN_10_0_18362",
+    "virtual_memory_threshold": 0,
+    "volatile_metadata_pointer": 0
   },
-  "name": "testbin/test.exe",
   "optional_header": {
     "addressof_entrypoint": 5444,
     "baseof_code": 4096,
@@ -910,7 +722,7 @@
             "childs": [
               {
                 "code_page": 0,
-                "hash": 564386015,
+                "hash": 1446587059356817631,
                 "offset": 11360,
                 "reserved": 0
               }

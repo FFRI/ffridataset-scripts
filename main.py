@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 #
-# (c) FFRI Security, Inc., 2019-2023 / Author: FFRI Security, Inc.
+# (c) FFRI Security, Inc., 2019-2024 / Author: FFRI Security, Inc.
 #
 import errno
 import hashlib
@@ -277,7 +277,7 @@ def compute_manalyze_impl(path: str, pe):
         # NOTE: The reason why we specify this flag is to avoid the bug of parsing resources in Manalyze.
         # NOTE: If Manalyze failed to parse the file, None will be returned.
         [
-            "./Manalyze/bin/manalyze",
+            "./workspace/Manalyze/bin/manalyze",
             "--dump=dos",
             "--output=json",
             "--plugins=packer",
