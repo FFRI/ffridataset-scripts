@@ -24,7 +24,6 @@ COPY poetry.lock /work
 COPY pyproject.toml /work
 COPY workspace/pypeid-0.1.3-py3-none-any.whl /work/workspace
 COPY patches/lief.patch /work
-COPY patches/pehash.patch /work
 
 RUN wget https://github.com/horsicq/DIE-engine/releases/download/3.09/die_3.09_Ubuntu_22.04_amd64.deb && \
     apt --fix-broken install ./die_3.09_Ubuntu_22.04_amd64.deb && \
