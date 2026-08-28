@@ -1,5 +1,5 @@
 #
-# (c) FFRI Security, Inc., 2019-2024 / Author: FFRI Security, Inc.
+# (c) FFRI Security, Inc., 2019-2026 / Author: FFRI Security, Inc.
 #
 import json
 import os

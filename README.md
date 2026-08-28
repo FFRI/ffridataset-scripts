@@ -9,7 +9,7 @@ We recommend using Docker to create datasets. For more information, refer to the
 Alternatively, you can run this script natively by installing the following dependencies on [tested platforms](#Tested). For detailed instructions, see the [Run this script natively](#Run-This-Script-Natively) section.
 
 - Python 3.12
-- [Poetry](https://python-poetry.org/) 1.7+
+- [Poetry](https://python-poetry.org/) 1.8+
 
 ## Using Docker
 
@@ -40,7 +40,7 @@ Please ensure the following:
 
 - The host directory containing the CSV file and executable files is mounted to the container’s `/work/data`.
 - The host directory where you want to save the JSON files is mounted to the container’s `/work/out_dir`.
-- Replace `<version_string>` with vYYYY (e.g., use v2024 for the FFRI Dataset 2024).
+- Replace `<version_string>` with vYYYY (e.g., use v2026 for the FFRI Dataset 2026).
 
 To process non-PE files, include the --not-pe-only flag:
 ```
@@ -57,19 +57,19 @@ export LC_ALL=C.UTF-8
 export LANG=C.UTF-8
 
 sudo apt update
-sudo apt install -y --no-install-recommends wget git gcc g++ make autoconf libfuzzy-dev unar cmake mlocate libssl-dev libglib2.0-0 curl libboost-regex-dev libboost-program-options-dev libboost-system-dev libboost-filesystem-dev build-essential libpcre2-dev libdouble-conversion-dev
+sudo apt install -y --no-install-recommends wget git gcc g++ make autoconf libfuzzy-dev unar cmake plocate libssl-dev libglib2.0-0 curl libboost-regex-dev libboost-program-options-dev libboost-system-dev libboost-filesystem-dev build-essential libpcre2-dev libdouble-conversion-dev
 sudo apt install -y --no-install-recommends libqt5core5a libqt5svg5 libqt5gui5 libqt5widgets5 libqt5opengl5 libqt5dbus5 libqt5scripttools5 libqt5script5 libqt5network5 libqt5sql5
 sudo apt install -y --no-install-recommends libffi-dev libncurses5-dev zlib1g zlib1g-dev libreadline-dev libbz2-dev libsqlite3-dev liblzma-dev
 sudo apt install -y --no-install-recommends software-properties-common gpg-agent gpg clang
-wget https://github.com/horsicq/DIE-engine/releases/download/3.09/die_3.09_Ubuntu_22.04_amd64.deb
-sudo apt --fix-broken install ./die_3.09_Ubuntu_22.04_amd64.deb
-rm die_3.09_Ubuntu_22.04_amd64.deb
+wget https://github.com/horsicq/DIE-engine/releases/download/3.10/die_3.10_Ubuntu_24.04_amd64.deb
+sudo apt --fix-broken install ./die_3.10_Ubuntu_24.04_amd64.deb
+rm die_3.10_Ubuntu_24.04_amd64.deb
 
 wget mark0.net/download/trid_linux_64.zip
 unar trid_linux_64.zip
 cp trid_linux_64/trid ./
 chmod u+x trid
-cp triddefs_dir/triddefs-dataset2024.trd triddefs.trd
+cp triddefs_dir/triddefs-dataset2026.trd triddefs.trd
 
 cd workspace
 
@@ -80,33 +80,42 @@ cd ../
 
 git clone https://github.com/JusticeRage/Manalyze.git
 cd Manalyze
-git checkout b6800ffcf2f7f4e82fe1f94d0eb2736e75e175ec
-cmake .
+git checkout 41ba9c57a40539bcb815ee03821c35ca66fff9be
+mkdir -p external
+cd external
+git clone https://github.com/JusticeRage/hash-library.git
+cd hash-library
+git checkout 5ecc248c68c30de02697105f3883938b1d476fed
+cd ../
+git clone https://github.com/JusticeRage/yara.git
+cd yara
+git checkout aa06d68821ed8e6329c62ee5a865d63b211ac5ee
+cd ../../
+cmake . -DGitHub=OFF
 make
 cd ../
 
 git clone https://github.com/lief-project/LIEF.git
 cd LIEF
-git checkout 573c885de5a2bb217d4d0255b54f9b53d9a4d7c9
-git apply ../../patches/lief.patch
+git checkout 6f3594f27056b85df51d6ad1c4ca944840ad3612
 cd ../
 
 git clone  https://github.com/trendmicro/tlsh.git
 cd tlsh
-git checkout 96536e3f5b9b322b44ce88d36126121685e45a77
+git checkout 188c9c87158bda183cee2199f94236e4551018bd
 ./make.sh
 cd ../
 
 git clone https://github.com/erocarrera/pefile.git
 cd pefile
-git checkout ceab92e003b3436d2e52b74e9c903e812a4aeae1
+git checkout 894605cc0d83146c6e1f481313979407df53e62e
 cd ../../
 
 wget https://github.com/ninja-build/ninja/releases/download/v1.12.1/ninja-linux.zip
 unar ninja-linux.zip
 sudo mv ninja /usr/bin/
 
-poetry install --no-root
+poetry install -vvv --no-root
 ```
 
 If something goes wrong, refer to the Dockerfile.
@@ -140,7 +149,7 @@ poetry run python main.py --csv <path/to/csv> --out <path/to/output_dataset_dir>
 
 ## Tested
 
-- Ubuntu 22.04.2 LTS
+- Ubuntu 24.04 LTS
 - Ubuntu 22.04 on WSL2 on Windows 10
 
 ## Development
@@ -165,7 +174,7 @@ docker run -v <path/to/here>\testbin:/work/testbin -v <path/to/here>\measurement
 
 Now you're ready to do profiling. To generate a cProfile result file, run:
 ```
-docker run -v <path/to/here>\measurement:/work/data -v <path/to/here>\out_dir:/work/out_dir ffridataset-scripts poetry run python -m cProfile -o ./out_dir/profiling.stats main.py --csv ./data/test.csv --out ./out_dir --log ./test.log --ver v2023
+docker run -v <path/to/here>\measurement:/work/data -v <path/to/here>\out_dir:/work/out_dir ffridataset-scripts poetry run python -m cProfile -o ./out_dir/profiling.stats main.py --csv ./data/test.csv --out ./out_dir --log ./test.log --ver v2026
 ```
 
 Then, execute the following command:
@@ -180,3 +189,5 @@ Now, you can view the profiling results through your browser.
 Yuki Mogi. &copy; FFRI, Inc. 2019-2024
 
 Koh M. Nakagawa. &copy; FFRI, Inc. 2019-2024
+
+Yuta Yoshida. &copy; FFRI, Inc. 2026

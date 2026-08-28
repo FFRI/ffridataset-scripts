@@ -2,7 +2,10 @@
   "detects": [
     {
       "filetype": "PE64",
+      "info": "",
+      "offset": "0",
       "parentfilepart": "Header",
+      "size": "12288",
       "values": [
         {
           "info": "",
@@ -19,11 +22,18 @@
           "version": "19.21.27702"
         },
         {
+          "info": "dynamic",
+          "name": "Microsoft C/C++ Runtime",
+          "string": "Library: Microsoft C/C++ Runtime[dynamic]",
+          "type": "Library",
+          "version": ""
+        },
+        {
           "info": "",
           "name": "Visual Studio",
-          "string": "Tool: Visual Studio(2019 version 16.1)",
+          "string": "Tool: Visual Studio(2019, v16.1)",
           "type": "Tool",
-          "version": "2019 version 16.1"
+          "version": "2019, v16.1"
         }
       ]
     }

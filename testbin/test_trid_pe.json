@@ -1,7 +1,7 @@
 {
-  "(.EXE)Win64Executable(generic)(10523/12/4)": "48.7%",
-  "(.EXE)Win16NEexecutable(generic)(5038/12/1)": "23.3%",
-  "(.EXE)OS/2Executable(generic)(2029/13)": "9.3%",
-  "(.EXE)GenericWin/DOSExecutable(2002/3)": "9.2%",
-  "(.EXE)DOSExecutableGeneric(2000/1)": "9.2%"
+  "(.EXE)Win64Executable(generic)(6522/11/2)": "37.0%",
+  "(.EXE)Win16NEexecutable(generic)(5038/12/1)": "28.6%",
+  "(.EXE)OS/2Executable(generic)(2029/13)": "11.5%",
+  "(.EXE)GenericWin/DOSExecutable(2002/3)": "11.3%",
+  "(.EXE)DOSExecutable(generic)(2000/1)": "11.3%"
 }

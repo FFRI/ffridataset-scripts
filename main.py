@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 #
-# (c) FFRI Security, Inc., 2019-2024 / Author: FFRI Security, Inc.
+# (c) FFRI Security, Inc., 2019-2026 / Author: FFRI Security, Inc.
 #
 import errno
 import hashlib
@@ -263,7 +263,15 @@ def compute_die(path: str):
         stdout=subprocess.PIPE,
         check=True,
     ).stdout.decode("utf-8")
-    return json.loads(raw_output)
+    decoder = json.JSONDecoder()
+    for i, ch in enumerate(raw_output):
+        if ch in "{[":
+            try:
+                obj, _ = decoder.raw_decode(raw_output[i:])
+                return obj
+            except json.JSONDecodeError:
+                pass
+    raise ValueError(f"No JSON found in DIE output: {raw_output!r}")
 
 def compute_manalyze(args_dict):
     return compute_manalyze_impl(**args_dict)
@@ -314,8 +322,40 @@ def compute_lief(dict_arg):
 def compute_lief_impl(path: str, pe):
     if pe is None:
         return None
-    return json.loads(lief.to_json(lief.PE.parse(path)))
 
+    wrapper = r"""
+import json
+import sys
+import lief
+
+path = sys.argv[1]
+parsed = lief.PE.parse(path)
+if parsed is None:
+    print(json.dumps({"ok": True, "result": None}))
+else:
+    print(json.dumps({"ok": True, "result": json.loads(lief.to_json(parsed))}))
+"""
+
+    result = subprocess.run(
+        [sys.executable, "-c", wrapper, path],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        check=False,
+    )
+
+    if result.returncode != 0:
+        logger.warning(
+            f"skip lief crash: path={path} returncode={result.returncode} "
+            f"stderr={result.stderr.decode('utf-8', errors='replace')}"
+        )
+        return None
+
+    try:
+        payload = json.loads(result.stdout.decode("utf-8", errors="replace"))
+        return payload.get("result")
+    except Exception as e:
+        logger.warning(f"skip lief invalid output: path={path} err={e}")
+        return None
 
 def compute_hashes(dict_arg):
     return compute_hashes_impl(**dict_arg)

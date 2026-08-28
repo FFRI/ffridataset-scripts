@@ -38,7 +38,7 @@
       "RVA": 8960,
       "section": ".rdata",
       "size": 112,
-      "type": "DEBUG"
+      "type": "DEBUG_DIR"
     },
     {
       "RVA": 0,
@@ -570,38 +570,14 @@
     }
   ],
   "load_configuration": {
-    "addressof_unicode_string": 0,
     "characteristics": 264,
-    "code_integrity": {
-      "catalog": 0,
-      "catalog_offset": 0,
-      "flags": 0,
-      "reserved": 0
-    },
     "critical_section_default_timeout": 0,
     "csd_version": 0,
     "decommit_free_block_threshold": 0,
     "decommit_total_free_threshold": 0,
-    "dynamic_value_reloc_table": 0,
-    "dynamic_value_reloctable_offset": 0,
-    "dynamic_value_reloctable_section": 0,
     "editlist": 0,
     "global_flags_clear": 0,
     "global_flags_set": 0,
-    "guard_address_taken_iat_entry_count": 0,
-    "guard_address_taken_iat_entry_table": 0,
-    "guard_cf_check_function_pointer": 5368717792,
-    "guard_cf_dispatch_function_pointer": 5368717800,
-    "guard_cf_function_count": 0,
-    "guard_cf_function_table": 0,
-    "guard_flags": 256,
-    "guard_long_jump_target_count": 0,
-    "guard_long_jump_target_table": 0,
-    "guard_rf_failure_routine": 0,
-    "guard_rf_failure_routine_function_pointer": 0,
-    "guard_rf_verify_stackpointer_function_pointer": 0,
-    "hotpatch_table_offset": 0,
-    "hybrid_metadata_pointer": 0,
     "lock_prefix_table": 0,
     "major_version": 0,
     "maximum_allocation_size": 0,
@@ -609,15 +585,9 @@
     "process_affinity_mask": 0,
     "process_heap_flags": 0,
     "reserved1": 0,
-    "reserved2": 0,
-    "reserved3": 0,
-    "se_handler_count": 0,
-    "se_handler_table": 0,
-    "security_cookie": 1073758216,
+    "security_cookie": 5368725512,
     "timedatestamp": 0,
-    "version": "WIN_10_0_18362",
-    "virtual_memory_threshold": 0,
-    "volatile_metadata_pointer": 0
+    "virtual_memory_threshold": 0
   },
   "optional_header": {
     "addressof_entrypoint": 5444,
@@ -817,10 +787,7 @@
       "numberof_line_numbers": 0,
       "numberof_relocations": 0,
       "pointerto_line_numbers": 0,
-      "pointerto_relocation": 0,
-      "types": [
-        "UNKNOWN"
-      ]
+      "pointerto_relocation": 0
     },
     {
       "characteristics": [
@@ -832,13 +799,7 @@
       "numberof_line_numbers": 0,
       "numberof_relocations": 0,
       "pointerto_line_numbers": 0,
-      "pointerto_relocation": 0,
-      "types": [
-        "IDATA",
-        "DEBUG",
-        "Out of range",
-        "UNKNOWN"
-      ]
+      "pointerto_relocation": 0
     },
     {
       "characteristics": [
@@ -851,10 +812,7 @@
       "numberof_line_numbers": 0,
       "numberof_relocations": 0,
       "pointerto_line_numbers": 0,
-      "pointerto_relocation": 0,
-      "types": [
-        "UNKNOWN"
-      ]
+      "pointerto_relocation": 0
     },
     {
       "characteristics": [
@@ -866,10 +824,7 @@
       "numberof_line_numbers": 0,
       "numberof_relocations": 0,
       "pointerto_line_numbers": 0,
-      "pointerto_relocation": 0,
-      "types": [
-        "UNKNOWN"
-      ]
+      "pointerto_relocation": 0
     },
     {
       "characteristics": [
@@ -881,11 +836,7 @@
       "numberof_line_numbers": 0,
       "numberof_relocations": 0,
       "pointerto_line_numbers": 0,
-      "pointerto_relocation": 0,
-      "types": [
-        "RESOURCE",
-        "UNKNOWN"
-      ]
+      "pointerto_relocation": 0
     },
     {
       "characteristics": [
@@ -898,11 +849,7 @@
       "numberof_line_numbers": 0,
       "numberof_relocations": 0,
       "pointerto_line_numbers": 0,
-      "pointerto_relocation": 0,
-      "types": [
-        "RELOCATION",
-        "UNKNOWN"
-      ]
+      "pointerto_relocation": 0
     }
   ],
   "virtual_size": 32768
